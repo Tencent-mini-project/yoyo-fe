@@ -1,0 +1,72 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            padding-top: 60px;
+        }
+
+        .unread {
+            background: #fffced;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <nav id="header_outer" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header" style="position:relative;">
+            <div class="index" style="position:absolute;right:5px;top:8px;">
+                <a class="btn btn-primary " type="button" href="{{ url_for('index') }}">返回主页</a>
+            </div>
+            <a class="navbar-brand" href="#">我的私信</a>
+        </div>
+
+    </nav>
+    {% include 'flash.html' %}
+    {% for session in sessions.items %}
+        <table class="table table-hover">
+            {% if session.from_id == g.user.id %}
+                <tr {% if not session.from_read %}class="unread"{% endif %}>
+                    <td width="60px"><a href="{{ url_for('profile', user_id = session.to_user.user_id) }}"><img
+                            src="{{ session.to_user.avatar_path }}" width="60px" height="60px"/></a></td>
+                    <td>
+                        <p>
+                            <a href="{{ url_for('message', user_id = session.to_user.user_id) }}">{{ session.to_user.nickname }}</a>
+                            | {{ session.timestamp|string|truncate(16,killwords=True,end='') }}</p>
+
+                        <p><a href="{{ url_for('message', user_id = session.to_user.user_id) }}">{{ session.latest_msg() }}</a>
+                        </p>
+                    </td>
+                </tr>
+            {% else %}
+                <tr {% if not session.to_read %}class="unread"{% endif %}>
+                    <td width="60px"><a href="{{ url_for('profile', user_id = session.from_user.user_id) }}"><img
+                            src="{{ session.from_user.avatar_path }}" width="60px" height="60px"/></a></td>
+                    <td>
+                        <p>
+                            <a href="{{ url_for('message', user_id = session.from_user.user_id) }}">{{ session.from_user.nickname }}</a>
+                            | {{ session.timestamp|string|truncate(16,killwords=True,end='') }}</p>
+
+                        <p><a href="{{ url_for('message', user_id = session.from_user.user_id) }}">{{ session.latest_msg() }}</a>
+                        </p>
+                    </td>
+                </tr>
+            {% endif %}
+            </tr>
+        </table>
+    {% endfor %}
+    <ul class="pager" style="padding-bottom: 40px;">
+        {% if sessions.has_prev %}
+            <li class="previous"><a href="{{ url_for('session', page = sessions.prev_num) }}">上一页</a></li>
+        {% else %}
+            <li class="previous disabled"><a href="#">上一页</a></li>
+        {% endif %}
+        {% if sessions.has_next %}
+            <li class="next"><a href="{{ url_for('session', page = sessions.next_num) }}">下一页</a></li>
+        {% else %}
+            <li class="next disabled"><a href="#">下一页</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}

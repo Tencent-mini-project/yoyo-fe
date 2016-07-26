@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width,  initial-scale=1.0,  maximum-scale=1.0,  user-scalable=no">
+   <title>嘉宾列表</title>
+   <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+   <script src="/static/js/analysis.js?ver=1.0"></script>
+<style>
+div.thumbnail img
+{
+height:220px;
+
+}
+.thumbnail
+{
+display:block;
+padding:4px;
+margin-left:0.5em;
+margin-right:0.5em;
+margin-bottom:0.5em;
+line-height:
+}
+p{font-family:微软雅黑体;font-weight:bold;}
+body{
+    background-color: #eee;
+}
+</style>
+   
+</head>
+<body>
+<div class="e" style="width:100%;height:4em">
+</div>
+
+<nav id="header_outer" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+   <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">嘉宾列表-{{ title }}</a>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav">
+         <li><a href="{{url_for('guest',guest_type='underboy')}}">本科男</a></li>
+         <li><a href="{{url_for('guest',guest_type='undergirl')}}">本科女</a></li>
+		 <li><a href="{{url_for('guest',guest_type='graduboy')}}">硕博男</a></li>
+		 <li><a href="{{url_for('guest',guest_type='gradugirl')}}">硕博女</a></li>
+		 <li><a href="{{url_for('guest',guest_type='work')}}">工作嘉宾</a></li>
+    
+      </ul>
+   </div>
+</nav>
+
+<div class=msg_page>
+  {% block body %}{% endblock %}
+</div>
+
+</html>
+	
+</body>
+</html>

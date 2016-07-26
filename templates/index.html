@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+    html{
+        font-size:62.5% !important;
+        -webkit-text-size-adjust:none; /* 主要针对手机的。 */
+    }
+    .index_bg{
+        background-color:#1b89e2;
+        height:35%;
+        width:100%;
+        margin-right:0;
+    }
+{#    .index_bg{#}
+{#        /*background-color:#1b89e2;*/#}
+{#        height:35%;#}
+{#        width:100%;#}
+{#        margin-right:0;#}
+{#        background-image: url("/static/img/christmas-bg.jpg");#}
+{#        background-size: cover;#}
+{#    }#}
+    .avatar{
+        display: flex;
+        margin-left: 15%;
+        position: absolute;
+        text-align: center;
+        /*
+        bottom: -webkit-calc(70% - 45px);
+        bottom: -moz-calc(70% - 45px);
+        bottom: calc(70% - 45px);
+        */
+        /* bottom: 70%; */
+        top: 35%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        /* margin-bottom: -45px; */
+        margin-top: -5.5rem;
+    }
+    .avatar img{
+        border-radius: 10px;
+        width: 90px;
+        height: 90px;
+    }
+
+{#    .avatar::after {#}
+{#        position: absolute;#}
+{#        content: '';#}
+{#        min-width: 5rem;#}
+{#        min-height: 5rem;#}
+{#        top: -2.5rem;#}
+{#        left: 7rem;#}
+{#        background-image: url(/static/img/christmas-hat.svg);#}
+{#        -moz-background-size: contain;#}
+{#        -o-background-size: contain;#}
+{#        -webkit-background-size: contain;#}
+{#        background-size: contain;#}
+{#        -webkit-transform: rotate(45deg);#}
+{#        -moz-transform: rotate(45deg);#}
+{#        -o-transform: rotate(45deg);#}
+{#        -ms-transform: rotate(45deg);#}
+{#        transform: rotate(45deg);#}
+{#    }#}
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if g.user.is_authenticated() %}
+{#<div class="index_bg" style="background-color:#1b89e2;height:30%;width:100%;margin-right:0;">#}
+<div class="index_bg">
+    <div class="avatar">
+        <a href="{{ url_for('profile', user_id=g.user.user_id) }}">
+            <img src="{{ g.user.avatar_path | replace("?imageView2/1/w/100/h/100", "?imageView2/1/w/150/h/150") }}">
+        </a>
+    </div>
+    <div style="height:80px;position:fixed;left:65%;top:18%;">
+        {{ g.user.nickname }}|{{ g.user.sex }}<br/>
+        访客数：{{ visits }}<br/>
+        获赞数：{{ counted }}
+    </div>
+</div>
+{% include 'flash.html' %}
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;left:1%;top:45%;color:#428bca;border-color:#6BA6F4;" href="{{ url_for('online2') }}" >OnLine</a>
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;right:1%;color:#428bca;top:45%" href="{{ url_for('profile', user_id=g.user.user_id) }}" >个人主页 </a>
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;left:1%;color:#428bca;top:56%" href="{{ url_for('edit') }}" >编辑资料</a>
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;right:1%;color:#428bca;top:56%" href="{{ url_for('follows') }}" >关注-粉丝
+    {% if fans %}<span class="badge" style="background-color:dodgerblue;color:white;">{{ fans }}</span>{% endif %}
+</a>
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;left:1%;color:#428bca;top:67%" href="{{ url_for('session2') }}" >
+    私信系统 {% if message %}<span class="badge" style="background-color:dodgerblue;color:white;">{{ message }}</span>{% endif %}
+</a>
+<a role="button" class="btn btn-default btn-lg" style="position:fixed;width:48%;right:1%;top:67%;color:#428bca;" href="{{ url_for('guest') }}" >已推嘉宾</a>
+<a role="button" class="btn btn-primary btn-lg" style="position:fixed;left:26%;width:48%;top:85%;" href="{{ url_for('match2') }}" >匹配系统</a>
+<a href="{{ url_for('logout') }}">退出</a>
+{% else %}
+    请先登录：<a href="{{ url_for('login') }}">登录</a> | <a href="{{ url_for('registry') }}">注册</a>
+{% endif %}
+
+{% endblock %}

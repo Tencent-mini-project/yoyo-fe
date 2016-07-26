@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="zhuang"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/static/js/analysis.js?ver=1.0"></script>
+    <link href="/static/css/style.css" rel="stylesheet"/>
+    <link href="/static/css/album.css" rel="stylesheet"/>
+    <link href="/static/css/iconfont/iconfont.css?ver=1.0" rel="stylesheet"/>
+</head>
+<body>
+<div class='alert dn'>
+    <div class="alert_content">
+        <div class="alert_a "><p>确认要删除这张照片吗</p></div>
+        <div class="alert_b"><button class="button btn_blue margin_confirm" id="confirm">确认</button></div>
+        <div class="alert_c"><button class="button btn_gray margin_cancel" id= "cancel">取消</button></div>
+    </div>
+</div>
+    <header class="header_one posr">
+	<div class="arrow-back" onclick="javascript:window.location='{{ url_for('profile', user_id=g.user.user_id) }}'" ><i class="iconfont">&#x5345;</i></div>
+    <p>相册管理</p>
+    </header>
+    {% include 'flash.html' %}
+    <div class="margin_info">
+        <p>管理你的相册</p>
+        <p>点击照片可删除，最多可以上传8张照片</p>
+        <div class="bottom_border"></div>
+    </div>
+    <div class="photo_wall ml5 mr5">
+        <div id="plus" class="posr"><div class="plus">+</div></div>
+        {% for pic in pics_url %}
+            <div class="clip_div"><img id="{{ pics_key[loop.index - 1] }}" class="img" src="{{ pic }}"/></div>
+        {% endfor %}
+    </div>
+</body>
+<script>
+$(document).ready(function(){
+    var hei=document.body.clientWidth;
+    $("#plus").height(hei*(0.3));
+    var hei_clip_div=$(".clip_div").width();
+    $(".clip_div").height(hei_clip_div);
+    var height_plus=$(".plus").height();
+    var width_plus=$(".plus").width();
+    $(".plus").css("margin-top",-height_plus/2);
+    $(".plus").css("margin-left",-width_plus/2);
+});
+$(document).ready(function(){
+    $(".img:not(first-child)").each(function(){
+        $(this).click(function(){
+            var $this=$(this);
+            var key = $(this).attr('id');
+            $this.parent().addClass("del");
+            $(".alert").show();
+            $("#confirm").click(function(){
+                $.ajax({
+                    url:"{{ url_for('album') }}" ,
+                    type: "POST" ,
+                    data: { key:key }
+                })
+                .done(function(data){
+                    if(data === 'error') {
+                        alert('删除失败，请稍候再试');
+                        return false;
+                    }
+                    $(".del").css("display","none");
+                    $(".alert").hide();
+                    num_image--;
+                });
+            });
+            $("#cancel").click(function(){
+                $this.parent().removeClass("del");
+                $(".alert").hide();
+            })
+        });
+    });
+});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    var config_data = {{ wx_config|safe }};
+    var num_image = {{ count }};  //当前相册图片数量
+
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: config_data[0], // 必填，公众号的唯一标识
+        timestamp:config_data[2], // 必填，生成签名的时间戳
+        nonceStr:config_data[1], // 必填，生成签名的随机串
+        signature:config_data[3],// 必填，签名，见附录1
+        jsApiList: [
+            'chooseImage',
+            'previewImage',
+            'uploadImage'
+           ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+    //上传相册
+    var album = {
+        localId: [],
+        serverId: []
+        };
+    var length = 0, i = 0, tem=0;
+    document.querySelector('#plus').onclick = function(){
+        wx.chooseImage({
+            success: function (res) {
+                album.localId = res.localIds;
+                length = album.localId.length;
+                alert('已选择 ' + res.localIds.length + ' 张图片');
+                tem = 8 - num_image;     //还可以上传图片数量
+                if(res.localIds.length > tem){
+                    alert('已选择 ' + res.localIds.length + ' 张图片,' + '相册最多8张图片,请重新选择！');
+                }
+                if(res.localIds.length <= tem){
+                    var i = 0, length = album.localId.length;
+                    album.serverId = [];
+                    function upload() {
+                        //alert('上传图片');
+                        setTimeout(wx.uploadImage({
+                            localId: album.localId[i],
+                            isShowProgressTips: 1,
+                            success: function (res) {
+                              i++;
+                              //alert('已上传：' + i + '/' + length);
+                              album.serverId.push(res.serverId);
+                              if (i < length) {
+                                upload();
+                              }
+                              else
+                              {
+                                  //alert('ab');
+                                  var sI = album.serverId;
+                                  var length1 = sI.length;
+
+                                  var str = '';
+                                  for(var j = 0;j < length1;j++)
+                                  {
+                                      str = str + sI[j] + '&&';
+                                  }
+                                  //alert(str);
+                                  $.ajax({
+                                            url: '{{ url_for("album") }}',
+                                            type: 'POST',
+                                            data: {'serverid': str}
+                                        })
+                                        .done(function (data) {
+
+                                            if (data === 'error') {
+                                                alert('加载失败，请稍候再试');
+                                                return false;
+                                            }
+                                            else
+                                            {
+                                                //alert(data);
+                                                location.reload(true);
+                                            }
+                                        });
+                              }
+                            },
+                            fail: function (res) {
+                              alert(JSON.stringify(res));
+                            }
+                      }), 200);
+                    }
+
+                    upload();
+                }
+            }
+        });
+    };
+
+    function albumimage_upload() {
+        if (album.localId.length == 0) {
+          alert('请先选择图片');
+          return;
+        }
+        upload();
+        //alert('12');
+        var sI = album.serverId;
+        var length1 = sI.length;
+        var str = '';
+        for(var j = 0;j < length1;j++)
+        {
+            str = str + sI[j] + '&&';
+        }
+        //alert(str);
+        $.ajax({
+                url: "{{url_for('album')}}",
+                type: 'POST',
+                data: {'serverid':str}
+            })
+            .done(function (data) {
+
+                if (data === 'error') {
+                    alert('加载失败，请稍候再试');
+                    return false;
+                }
+                else
+                {
+                    alert(data);
+                }
+            });
+    }
+
+    function upload() {
+        wx.uploadImage({
+            localId: album.localId[i],
+            isShowProgressTips: 1,
+            success: function (res) {
+                i++;
+                alert('已上传：' + i + '/' + length);
+                album.serverId.push(res.serverId);
+                if (i < length) {
+                    upload();
+                }
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+                alert("failed");
+            }
+        });
+    }
+     wx.error(function (res) {
+        alert(res.errMsg);
+     });
+</script>

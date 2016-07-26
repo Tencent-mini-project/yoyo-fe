@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="author" content="zhuang"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"/>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/static/js/analysis.js?ver=1.0"></script>
+    <link href="/static/css/style.css?ver=1.1" rel="stylesheet"/>
+    <link href="/static/css/iconfont/iconfont.css?ver=1.0" rel="stylesheet"/>
+    <style>
+        .private_message {
+            background-color: #F4FAFF;
+            border-bottom: 1px solid #eee;
+        }
+
+        .private_unread {
+            background-color: #FFFEE5 !important;
+        }
+
+        .private_img {
+            width: 6.5rem;
+            height: 6.5rem;
+            text-align: center;
+        }
+
+        .private_img img {
+            width: 5.4rem;
+            height: 5.4rem;
+            margin-top: .5rem;
+            border-radius: .4rem;
+        }
+
+        .private_content {
+            margin-left: 6.5rem;
+            height: 6.5rem;
+            position: relative;
+        }
+        .private_content img{
+            width: 24px;
+            height: 24px;
+        }
+        .private_content span {
+            display: block;
+        }
+
+        .private_content span:first-child {
+            height: 3.6rem;
+            font-size: 1.8rem;
+            line-height: 4.2rem;
+            padding-left: .5rem;
+            color: #000000;
+        }
+
+        .private_content span:nth-child(2) {
+            padding-left: .5rem;
+            font-size: 1.2rem;
+            color: #858585;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .time {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            font-size: 1rem;
+            color: #858585;
+        }
+
+        a:link {
+            font-size: 12px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:visited {
+            font-size: 12px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            font-size: 12px;
+            color: #999999;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<header class="header_one posr">
+    <div class="arrow-back" onclick="javascript:window.location='{{ url_for('index') }}'"><i class="iconfont">&#x5345;</i></div>
+    <p>我的私信</p>
+</header>
+
+<div class="outbox">
+    <div class="inbix">
+        <div class="private_mes_list">
+            {% for session in sessions %}
+                {% if session.from_id == g.user.id %}
+                    {% if not session.from_read %}
+                        <div class="private_message private_unread posr">
+                    {% else %}
+                        <div class="private_message posr">
+                    {% endif %}
+                        <a href="{{ url_for('profile', user_id = session.to_user.user_id) }}">
+                            <div class="private_img left">
+                                <img src="{{ session.to_user.avatar_path }}"/>
+                            </div>
+                        </a>
+                        <a href="{{ url_for('message2', user_id = session.to_user.user_id) }}">
+                            <div class="private_content">
+                                <span>{{ session.to_user.nickname }}</span>
+                                <span>{{ session.latest_msg2(g.user)|em_format2|safe }}</span>
+                            </div>
+                            <div class="time ">{{ session.timestamp|datetimeformat }}</div>
+                        </a>
+                    </div>
+                {% else %}
+                    {% if not session.to_read %}
+                        <div class="private_message private_unread posr">
+                    {% else %}
+                        <div class="private_message posr">
+                    {% endif %}
+                        <a href="{{ url_for('profile', user_id = session.from_user.user_id) }}">
+                            <div class="private_img left">
+                                <img src="{{ session.from_user.avatar_path }}"/>
+                            </div>
+                        </a>
+                        <a href="{{ url_for('message2', user_id = session.from_user.user_id) }}">
+                            <div class="private_content">
+                                <span>{{ session.from_user.nickname }}</span>
+                                <span>{{ session.latest_msg2(g.user)|em_format2|safe }}</span>
+                            </div>
+                            <div class="time ">{{ session.timestamp|datetimeformat}}</div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,496 @@
+{% extends 'base.html' %}
+{% block title %}武汉跨校交友活动——做我男友一小时{% endblock %}
+{% block head %}
+    {{ super() }}
+<style>
+#pubinfo { height:150px;}
+#prinfo  { height:100px;}
+
+/* 设置输入框们的高度 */
+.form-control{
+    position:relative;
+    height:40px;
+    -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+            box-sizing:border-box;
+    padding:7px;
+    font-size:16px;
+}
+/* 设置性别和状态按钮组高度 */
+.input-group .btn-group {
+    height: 40px;
+}
+
+body{
+    background-color:rgb(193,170,114);margin:0px;padding:0px;
+}
+.btn-group label{margin:3px;}
+.container{max-width:600px;margin:0 auto; padding:0px;width:95%;}
+
+
+/* 14.10.26 */
+.input-group span{background-color:#b69968;border:1px solid #b68968;color:#6a3427;}
+.input-group input{background-color:#d5c59f;}
+.input-group select{background-color:#d5c59f;}
+.btn-group label{
+  -webkit-box-shadow: 3px 3px 3px #b69968;
+  -moz-box-shadow: 3px 3px 3px #b69968;
+  box-shadow: 3px 3px 3px #b69968;
+  background-color:#d5c59f;
+  color:#6a3427;
+  margin:3px;
+ }
+ .btn-default:active, .btn-default.active{
+    background-color:#b69968;
+	border-color:#b68968 ;
+    color:#6a3427;
+}
+#tijiao{width:100%;background-color:#6a3427;color:#d5c59f;border:1px solid #b68968;}
+#bb{width:48%;background-color:#6a3427;color:#d5c59f;border:1px solid #b68968;}
+#aa{width:48%;background-color:#6a3427;color:#d5c59f;border:1px solid #b68968;}
+
+
+/*joey*/
+
+.choose_file{
+    -webkit-box-shadow: 3px 3px 3px #b69968;
+    -moz-box-shadow: 3px 3px 3px #b69968;
+    box-shadow: 3px 3px 3px #b69968;
+    background-color: #d5c59f;
+    color: #6a3427;
+}
+
+
+input[type="button"], input[type="submit"], input[type="reset"],select {
+-webkit-appearance: none;
+}
+textarea {  -webkit-appearance: none;}
+#confirm{display:none;max-width:600px;margin:0 auto; padding:0px;width:95%;}
+#confirm p{color:#6a3427;}
+#confirm p input{disabled:disabled;}
+.main_info{border:1px solid #d5c59f;padding:5px;position:relative; }
+</style>
+{% endblock %}
+
+{% block content %}
+<form class="form-horizontal" role="form" action="" method="post" name="edit" id="huang">
+<div class="container">
+    <img src="http://static-juewangpo.qiniudn.com/bao.jpg" height="60px">
+
+        {{ form.hidden_tag() }}
+    <fieldset style="margin-bottom:0.5em">
+         <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">姓名</span>
+         {{ form.name (class="form-control", placeholder="你的真实姓名", autocomplete="off")}}
+ </div>
+{% for error in form.errors.name %}
+<span style="color:red;">[{{ error }}]</span><br/>
+{% endfor %}
+
+     <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">学校</span>
+         {{ form.school(class="form-control")}}
+ </div>
+      <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">年级</span>
+         {{ form.grade(class="form-control")}}
+ </div>
+
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">身高</span>
+
+    {{ form.height(class="form-control",placeholder="输入数字", type="number", min="100", max="250",autocomplete="off") }}
+<span class="input-group-addon">厘米</span>
+</div>
+{% for error in form.errors.height %}
+<span style="color:red;">[{{ error }}]</span><br/>
+{% endfor %}
+
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">生日</span>
+    <select class="form-control pull-left" name="byear" id="byear"  style="width:50%;">
+    <option value="请选择">请选择</option>
+        {% for val in range(1987,2003) %}
+        <option value={{ val }} {% if val==byear %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+    </select>
+    <select class="form-control pull-right" name="bmonth" id="bmonth" style="width:50%;">
+    <option value="请选择">请选择</option>
+        {% for val in range(1,13) %}
+        <option value={{ val }} {% if val==bmonth %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+    </select>
+ </div>
+
+         <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">手机</span>
+         {{ form.phone (class="form-control", placeholder="11位手机号，我们会短信通知您",autocomplete="off")}}
+ </div>
+{% for error in form.errors.phone %}
+<span style="color:red;">[{{ error }}]</span><br/>
+{% endfor %}
+
+<div ><img src="http://static-juewangpo.qiniudn.com/zi.jpg" height="100px;"></div>
+    <div class="btn-group" data-toggle="buttons" style="margin-top:-35px;">
+    {% for i in perdata %}
+
+    <label class="btn btn-default " style="border-radius:500px;"><input class="form-control" type="checkbox" name="personality" value="{{ i[0] }}">{{ i[1] }}<br></label>
+    {% endfor %}
+    </div>
+
+    <div ><img src="http://static-juewangpo.qiniudn.com/zi2.jpg" height="100px;"></div>
+    <div class="btn-group" data-toggle="buttons" style="margin-top:-50px;">
+    {% for i in hopedata %}
+    <label class="btn btn-default" style="border-radius:500px;"><input class="form-control" type="checkbox" name="hoped" value="{{ i[0] }}">{{ i[1] }}<br></label>
+    {% endfor %}
+    </div>
+    </fieldset>
+    <div>
+    <div><img src="http://static-juewangpo.qiniudn.com/zi3.jpg" height="50px;"></div>
+     <p style="color:#6a3427;font-size: 14px;">照片是可选滴~部分安卓用户不能上传图片，请复制链接在电脑上报名</p>
+<input type="file" class="file" id="file" name="file">
+    <input type="hidden" id="base" name="data" >
+        <div><img src="http://static-juewangpo.qiniudn.com/zi4.jpg" height="50px;"></div>
+        {{ form.info(class="form-control", maxlength=299, style="height:100px;",placeholder="我们会审核，请认真填写，不许超过300字呢~") }}
+    </div>
+    <div style="margin-top:10px;">
+   <input id="tijiao" type="btn" class="btn btn-primary btn-lg "  value="提交报名">
+     </div>
+</div>
+<div id="confirm">
+    <img src="http://static-juewangpo.qiniudn.com/bao.jpg" height="60px">
+	<div id="message" >
+        <div class="main_info">
+	    <p>姓名：<input id="i" style="border:none;background-color:rgb(193,170,114)" value="" disabled></p>
+        <p>性别：<input id="h" style="border:none;background-color:rgb(193,170,114); width: 1px" value="" disabled>{% if sex == 'boy'%}男{% endif %}{% if sex == 'girl'%}女{% endif %}</p>
+	    <p>学校：<input id="j" style="border:none;background-color:rgb(193,170,114)" value="" disabled></p>
+	    <p>年级：<input id="k" style="border:none;background-color:rgb(193,170,114)" value="" disabled></p>
+	    <p>身高：<input id="l" style="border:none;background-color:rgb(193,170,114)" value="" disabled></p>
+	    <p>生日：<input id="m" style="border:none;background-color:rgb(193,170,114);width:50px;" value="" disabled>年<input id="n" style="border:none;background-color:rgb(193,170,114);width:28px;" value="" disabled>月</p>
+	    <p>手机：<input id="o" style="border:none;background-color:rgb(193,170,114);color:red;" value="" disabled></p>
+	    <!-- <p>你是：<br>
+		   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="p" style="border:none;background-color:rgb(193,170,114);" value="" disabled></p>
+	    <p>你想：<br>
+		   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="q" style="border:none;background-color:rgb(193,170,114);" value="" disabled></p>
+		 -->
+		   <p>自我介绍：</p>
+
+            <textarea id="r" rows="5" style="background-color:rgb(193,170,114); width: 100%; height: 100%; padding-bottom: 0px; margin-bottom: 0px;border: 0; overflow: auto;" value="" disabled></textarea>
+		</div>
+            <p>[确认前须知]每人只有<b>一次报名机会</b>，我们会认真审核你的资料，并作筛选，请认真填写，活动当天我们会检查学生证和身份证。</p>
+		<div>
+		 <input id="aa" type="btn" class="btn btn-primary btn-lg " value="修改">
+		 <input id="bb" type="submit" class="btn btn-primary btn-lg " value="确认报名">
+		 </div>
+	</div>
+
+</div>
+    </form>
+<!--把表单的值写入下面的div-->
+<script type="text/javascript">
+     $("#name").bind("blur",function(event) {
+        var val = $(this).val();
+        $("#i").val(val);
+    });
+    $("#school").change(function () {
+	var abc = $('#school').val();
+	$("#j").val(abc);
+    });
+    $("#grade").change(function () {
+	var abc = $('#grade').val();
+	$("#k").val(abc);
+    });
+    $("#height").bind("blur",function(event) {
+        var val = $(this).val();
+        $("#l").val(val);
+    });
+
+    $("#byear").change(function () {
+	    var abc = $('#byear').val();
+	    $("#m").val(abc);
+    });
+	$("#bmonth").change(function () {
+	    var abc = $('#bmonth').val();
+	    $("#n").val(abc);
+    });
+
+    $("#phone").bind("blur",function(event) {
+        var val = $(this).val();
+        $("#o").val(val);
+    });
+
+	$("input[name='personality']").change(function(){
+        var result="";
+        $("input[name='personality']:checked").each(function(){
+               result+=$(this).val()+',';
+        });
+        $("#p").val(result);
+    });
+	$("input[name='hoped']").change(function(){
+        var result="";
+        $("input[name='personality']:checked").each(function(){
+               result+=$(this).val()+',';
+        });
+        $("#q").val(result);
+    });
+	$("#info").bind("blur",function(event) {
+        var val = $(this).val();
+        $("#r").val(val);
+    });
+</script>
+
+<!--实现页面跳转效果-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#tijiao").click(function(){
+        $(".container").hide();
+        $("#confirm").show();
+    });
+});
+</script>
+    <script>
+    $(document).ready(function(){
+	    $("#bb").click(function(){
+            var x=document.forms["edit"]["phone"].value;
+            var atpos=x.length;
+            if(atpos!==11)
+               {alert("请点击”修改“，输入11位手机号");
+                return false;
+            }
+			var y=document.forms["edit"]["height"].value;
+			if(y>250 || y<100)
+               {alert("请点击'修改'，填写正确身高");
+                return false;
+            }
+        });
+	});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#aa").click(function(){
+        $(".container").show();
+        $("#confirm").hide();
+    });
+});
+</script>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', init, false);
+//时间监听事件接受三个参数：事件类型，处理，用户图片。DOMContentLoaded是firefox下特有的Event, 当所有DOM解析完以后会触发这个事件。
+
+
+function init() {
+  var u = new UploadPic();
+  u.init({
+    input: document.querySelector('#file'),
+    callback: function (base64) {
+     // var html = '';
+
+     // html =
+      //     '<div class="itm"><div class="tit">图片预览：</div><div class="cnt"><img src="' + base64 + '"><\/div><\/div>'
+       //    + '<div class="itm"><div class="tit">Base64编码：</div><div class="cnt"><input type='text' value='+base64+' /></div>';
+		   // <div class="cnt"><textarea>' + base64 + '<\/textarea><\/div><\/div>';
+
+      document.querySelector('#base').value=base64;
+    },
+    loading: function () {
+      document.querySelector('#base').innerHTML = '读取中，请稍候...';
+    }
+  });
+}
+
+function UploadPic() {   //新建一个函数，设置他的一些属性以及初始值。还设置了两个方法。
+  this.sw = 10;
+  this.sh = 0;
+  this.tw = 0;
+  this.th = 0;
+  this.scale = 0;
+  this.maxWidth = 0;
+  this.maxHeight = 0;
+  this.maxSize = 0;
+  this.fileSize = 0;
+  this.fileDate = null;
+  this.fileType = '';
+  this.fileName = '';
+  this.input = null;
+  this.canvas = null;
+  this.mime = {};
+  this.type = '';
+  this.callback = function () {};
+  this.loading = function () {};
+}
+
+UploadPic.prototype.init = function (options) {
+  // 初始参数
+  this.maxWidth = options.maxWidth || 500;
+  this.maxHeight = options.maxHeight || 500;
+  this.maxSize = options.maxSize || 12 * 1024 * 1024;
+  this.input = options.input;
+  this.mime = {'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'bmp': 'image/bmp'};
+  this.callback = options.callback || function () {};
+  this.loading = options.loading || function () {};
+
+  this._addEvent();
+};
+
+/**
+ * @description 绑定事件
+ * @param {Object} elm 元素
+ * @param {Function} fn 绑定函数
+ */
+UploadPic.prototype._addEvent = function () {
+  var _this = this;
+
+  function tmpSelectFile(ev) {
+    _this._handelSelectFile(ev);
+  }
+
+  this.input.addEventListener('change', tmpSelectFile, false);
+};
+
+/**
+ * @description 绑定事件
+ * @param {Object} elm 元素
+ * @param {Function} fn 绑定函数
+ */
+UploadPic.prototype._handelSelectFile = function (ev) {
+  var file = ev.target.files[0];
+
+  this.type = file.type
+
+  // 如果没有文件类型，则通过后缀名判断（解决微信及360浏览器无法获取图片类型问题）
+  if (!this.type) {
+    this.type = this.mime[file.name.match(/\.([^\.]+)$/i)[1]];
+  }
+
+  if (!/image.(png|jpg|jpeg|bmp)/.test(this.type)) {
+    alert('选择的文件类型不是图片');
+    return;
+  }
+
+  if (file.size > this.maxSize) {
+    alert('选择文件大于' + this.maxSize / 1024 / 1024 + 'M，请重新选择');
+    return;
+  }
+
+  this.fileName = file.name;
+  this.fileSize = file.size;
+  this.fileType = this.type;
+  this.fileDate = file.lastModifiedDate;
+
+  this._readImage(file);
+};
+
+/**
+ * @description 读取图片文件
+ * @param {Object} image 图片文件
+ */
+UploadPic.prototype._readImage = function (file) {
+  var _this = this;
+
+  function tmpCreateImage(uri) {
+    _this._createImage(uri);
+  }
+
+  // this.loading();
+
+  this._getURI(file, tmpCreateImage);
+};
+
+/**
+ * @description 通过文件获得URI
+ * @param {Object} file 文件
+ * @param {Function} callback 回调函数，返回文件对应URI
+ * return {Bool} 返回false
+ */
+UploadPic.prototype._getURI = function (file, callback) {
+  var reader = new FileReader();
+  var _this = this;
+
+  function tmpLoad() {
+    // 头不带图片格式，需填写格式
+    var re = /^data:base64,/;
+
+    var ret = this.result + '';
+
+    if (re.test(ret)) ret = ret.replace(re, 'data:' + _this.mime[_this.fileType] + ';base64,');
+
+    callback && callback(ret);
+  }
+
+  reader.readAsDataURL(file);
+  reader.onload = tmpLoad;
+
+  return false;
+};
+
+/**
+ * @description 创建图片
+ * @param {Object} image 图片文件
+ */
+UploadPic.prototype._createImage = function (uri) {
+  var img = new Image();
+  var _this = this;
+
+  function tmpLoad() {
+    _this._drawImage(this);
+  }
+
+  img.onload = tmpLoad;
+
+  img.src = uri;
+};
+
+/**
+ * @description 创建Canvas将图片画至其中，并获得压缩后的文件
+ * @param {Object} img 图片文件
+ * @param {Number} width 图片最大宽度
+ * @param {Number} height 图片最大高度
+ * @param {Function} callback 回调函数，参数为图片base64编码
+ * return {Object} 返回压缩后的图片
+ */
+UploadPic.prototype._drawImage = function (img, callback) {
+  this.sw = img.width;
+  this.sh = img.height;
+  this.tw = img.width;
+  this.th = img.height;
+
+  if( !!document.createElement('canvas').getContext){
+      this.scale = (this.tw / this.th).toFixed(2);
+
+      if (this.sw > this.maxWidth) {
+        this.sw = this.maxWidth;
+        this.sh = Math.round(this.sw / this.scale);
+      }
+
+      if (this.sh > this.maxHeight) {
+        this.sh = this.maxHeight;
+        this.sw = Math.round(this.sh * this.scale);
+      }
+
+      this.canvas = document.createElement('canvas');
+      var ctx = this.canvas.getContext('2d');
+
+      this.canvas.width = this.sw;
+      this.canvas.height = this.sh;
+
+      ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.sw, this.sh);
+
+      this.callback(this.canvas.toDataURL(this.type));
+
+      ctx.clearRect(0, 0, this.tw, this.th);
+      this.canvas.width = 0;
+      this.canvas.height = 0;
+      this.canvas = null;
+  }else{
+
+      this.callback(img.src);
+  }
+
+
+};
+</script>
+{% endblock %}

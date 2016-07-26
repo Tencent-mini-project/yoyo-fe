@@ -1,0 +1,464 @@
+{% extends 'base.html' %}
+{% block head %}
+       {{ super() }}
+       <link rel="stylesheet" href="/static/css/profile.css">
+ <style>
+ body{
+    background-color: #fff;
+	width:100%;
+	line-height:1.5;
+     }
+ a:hover {text-decoration:none;}
+ .changeimg{
+     position:relative;
+	 width:100%;
+	 }
+ .btn-wrapper{
+     position:absolute;
+     right:0px;
+     bottom:0px;
+     }
+ .bigdick{
+     margin: 0;
+     width:100%;
+	 height:auto;
+     z-index:-1;
+     }
+ .photo{
+
+     margin-top:-45px;
+     position:relative;
+     margin-left:50%;
+     left:50%;
+     margin-left:-44px;
+     float:left;
+     border-radius:500px;
+	 padding:3px;
+	 z-index:1;
+	 background-color:#fff;
+     }
+ .picture{
+     z-index:1;
+     margin:0px;
+     height:85px;
+     width:85px;
+     }
+ .content{
+     clear:both;
+	 	 margin:0;
+		 background-color:#fff;
+
+     }
+.nickn{
+     font-size:20px;
+     margin:10px 0px 5px 0;
+     text-align:center;
+     width:100%;
+     font-weight:bold;
+     }
+.one{
+    clear:both;
+	width:100%;
+	text-align:center;
+	color:#8d8d8d;
+	font-size:12px;
+	}
+.three,.four,.five{
+    width:33%;
+	float:left;
+	text-align:center;
+	padding:6px 0 0 0;
+	margin:0;
+	border-top:1px solid  #eee;
+	border-bottom:1px solid #eee;
+    }
+.footer{
+    width:100%;
+	margin:0;
+	padding:0 5px;
+	background-color:#eee;
+    }
+.infomation{
+	width:100%;word-wrap:break-word;height:auto;min-height:50px;
+    }
+.sanxiang {width:100%;margin-top:30px;}
+.bhh{
+	color:#8d8d8d;
+	font-size:12px;
+	}
+.School{
+    width:100%;
+	text-align:center;
+	clear:both;
+	margin-bottom:5px;
+	color:#8d8d8d;
+	font-size:12px;
+    }
+.nav-one{
+    width:100%;
+	margin:0;
+	padding:0 5px;
+    }
+/*点赞功能 add by lee @14.8.27 */
+.likes{
+    text-align: center;
+    border:1px solid #FF679D;
+    margin:0 auto;
+    height:28px;
+    width:90px;
+    line-height:28px;
+    border-radius:500px;
+    background-color:rgba(55,55,55,0);
+    outline:none;
+
+}
+.count{
+    font-size:13px;
+    color:#FF679D;
+}
+.liked{
+    background-color:#FF679D;
+}
+.whiteColor{
+    color:white !important;
+}
+.noborder{
+    border:none !important;
+}
+#likes{
+	font-size:13px !important;
+}
+
+/*点赞功能 add by lee @14.8.27 */
+.likes{
+    text-align: center;
+}
+ </style>
+ <!--   <script type=text/javascript>
+/*点赞jquery  add by lee @14.8.26*/
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $(function() {
+    $('span#likes').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/ajax/likes/{{ user.user_id }}', function(data) {
+        $("#count").text(data.count);
+      });
+      return $("#errormsg").text("您已点过赞~").show(100).delay(700).hide(100);
+    });
+  });
+</script>
+-->
+<script>
+$(document).ready(function(){
+    $(".likes").click(function(){
+    var likes = $(".likes").html();
+        if(likes.indexOf("whiteColor") == -1){
+            $(".likes").addClass("liked");
+            $("#likes").addClass("whiteColor");
+            $(".count").addClass("whiteColor");
+            // 增加数值
+            var num = $("#count").text();
+            num++;
+            $("#count").text(num);
+            // 发送请求
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $.getJSON($SCRIPT_ROOT + '/ajax/likes/{{ user.user_id }}', function(data) {
+                return true
+            });
+        } else {
+            $("#errormsg").text("您已点过赞,下周再来~").show(100).delay(700).hide(100);
+        }
+    });
+
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class='alert dn'>
+    <div class="click_close_one"></div>
+    <div class="alert_content">
+        <div class="alert_a">
+            <button id="upavatar" class="button btn_blue margin">更换头像</button>
+        </div>
+        <div class="alert_b">
+            <button id="upback" class="button btn_blue margin">更换背景</button>
+        </div>
+        <div class="alert_c">
+            <a class="button" href="{{ url_for('album') }}"><button class="button btn_pink margin">相册管理</button></a>
+        </div>
+    </div>
+</div>
+<!--把个人页面的模板移植过来，再修改 -->
+<div class="changeimg">
+    <img class="bigdick" src="{{ user.back_path }}">
+    <div class="div_bottom">
+        {% if user.id==g.user.id %}
+            {% if avatar == 0 %}
+                <p>请上传高清头像</p>
+            {% else %}
+		        <p>点击头像管理相册</p>
+            {% endif %}
+        {% endif %}
+        <div id="preview" class="btn-wrapper">
+			<i class="iconfont micro_photo">&#x5567;</i>&nbsp;<span id="pictures_num">{{ pics_count }}</span>
+		</div>
+	</div>
+</div>
+<div class="photo">
+    {% if user.id==g.user.id %}
+        <img id="click_alert" class="picture img-circle" src="{{ user.avatar_path }}" >
+    {% else %}
+        <img id="avatar_view" class="picture img-circle" src="{{ user.avatar_path }}" >
+    {% endif %}
+</div>
+<div class="content">
+    <div class="nickn">{{ user.nickname }}
+        {% if user.sex == "男" %}
+            <i class="icon iconfont man">&#x5679;</i>
+        {% else %}
+            <i class="icon iconfont woman">&#x5678;</i>
+        {% endif %}
+
+        {% if user.role == 2 %}
+            <i class="icon iconfont">&#x5234;</i>
+        {% elif user.role == 3 %}
+            <i class="icon iconfont">&#x5456;</i>
+        {% endif %}
+    {# 判断并显示性别，连接修改为七牛
+    {% if user.sex == "男" %}
+        <img src="/static/img/male.png" width="20">
+    {% else %}
+        <img src="/static/img/female.png" width="20">
+    {% endif %}
+    #}
+    </div>
+    {% if user.status == '已工作' and work_city != '' %}
+        <div class="one">{{ user.school }} {{ work_city }}工作</div>
+    {% else %}
+        <div class="one">{{ user.school }} {{ user.status }}</div>
+    {% endif %}
+	<div class="School"style="margin-bottom:0px;">{{ user.grade }}</div>
+    <div class="School">{{ user.studID|string|truncate(6,killwords=True,end='****') }}</div>
+    <div style="width:100%;text-align:center;clear:both;margin:0px;">安家：{{ user.regtime }}</div>
+	<div style="width:100%;text-align:center;margin:0px;">冒泡：{{ user.last_seen|string|truncate(10,killwords=True,end='') }}</div>
+	<!--         <div class="likes" style="height:18px;">
+        <span id="count" style="height:18px;">{{ counted }}</span>个 <span class="glyphicon glyphicon-heart" style="color: rgb(255, 103, 157);" id="likes"></span>
+        <span id="errormsg"></span>
+    </div> -->
+    <div style="margin:0 auto;height:28px;position:relative;text-align:center;padding:0px;margin-top:-7px;margin-bottom:-7px;" >
+        {% if user.id==g.user.id %}
+            <button type="button" class="likes noborder" style="line-height:17px;margin-top:12px;" disabled>
+            <i class="iconfont" style="color: #FF679D;line-height:17px;" id="likes">&#x5790;</i>
+            <span id="count" class="count" style="line-height:17px;margin-left:-1px;">{{ counted }}</span><span class="count">个赞</span>
+        {% else %}
+            {% if is_like %}
+                <button type="button" class="likes liked" style="line-height:17px;margin-top:12px;">
+                <i class="iconfont whiteColor" style="color: #FF679D;line-height:25px;" id="likes">&#x5790;</i>
+                <span id="count" class="count whiteColor" style="line-height:25px;margin-left:-1px;">{{ counted }}</span><span class="count whiteColor">个赞</span>
+            {% else %}
+                <button type="button" class="likes" style="line-height:17px;margin-top:12px;">
+                <i class="iconfont" style="color: #FF679D;line-height:25px;" id="likes">&#x5790;</i>
+                <span id="count" class="count" style="line-height:25px; margin-left:-1px;">{{ counted }}</span><span class="count">个赞</span>
+            {% endif %}
+        {% endif %}
+        </button>
+
+        <span id="errormsg" style="line-height:35px;"></span>
+    </div>
+	<!--
+     此处我解释一下，就是别人来你的界面的时候，没点赞的时候，点赞，button就会增加类.liked,<i>和<span>就会增加类.whiteColor，并会ajax请求。
+    如果点过了，点赞就会文字提示，此处不ajax请求。最后如果自己到自己的界面，那么就是在button加一个类.noborder，并设置disabled属性。
+	-->
+
+
+	<div class="sanxiang">
+    <div class="three"><small>生日</small><br><p class="bhh">{{ user.bday }}</p></div>
+	<div class="four"><small>身高</small><br><p class="bhh"> {{ user.height }}</p></div>
+	<div class="five"><small>家乡</small><br><p class="bhh">{{ user.hometown }}</p></div>
+	</div>
+
+</div>
+
+<div style="padding:0 20px;margin:0;background-color:#eee;clear:both;">
+        <p><strong>兴趣爱好</strong><span class="glyphicon glyphicon-heart"></span></p>
+        <div class="infomation">{{ user.favorite }}</div>
+        <p><strong>个性签名</strong><span class="glyphicon glyphicon-book"></span></p>
+        <div class="infomation">{{ user.declare}}</div>
+        <p><strong>个人说明</strong><span class="glyphicon glyphicon-user"></span></p>
+        <div class="infomation">{{ user.pubinfo }}</div>
+    {% if g.user.is_friend(user) %}
+        <p><strong>联系方式</strong><span class="glyphicon glyphicon-comment"></span></p>
+        <div class="infomation">{{ user.contact}}</div>
+        <p><strong>私密说明</strong><span class="glyphicon glyphicon-exclamation-sign"></span></p>
+        <div class="infomation">{{ user.prinfo}}</div>
+    {% endif %}
+</div>
+
+<div class="container" style="background-color:#eee">
+{# 下面的，加入是否为好友的判断，改为“发送好友请求”或“发送私信”另外，盒模型，长方块 #}
+    {% if user.id == g.user.id%}
+        <nav style="position: relative; bottom: 1px;" role="navigation">
+            <a class="btn btn-primary btn-lg pull-left btn-right" style="width:50%;" role="button" href="{{ url_for('edit') }}">编辑资料</a>
+            <a class="btn btn-default btn-lg pull-right btn-left" style="width:50%;" role="button" href="{{ url_for('index') }}">返回主页</a>
+         </nav>
+        {% elif user.id != g.user.id and g.user.is_following(user) %}
+
+        <div class="nav-two">
+            <a class="btn btn-primary  btn-lg btn-right"  style="width:33%;float:left;" role="button" href="{{ url_for('message2', user_id=user.user_id) }}">发送私信</a>
+            <a class="btn btn-primary  btn-lg btn-right btn-left" style="width:33%;float:left;" role="button" href="{{ url_for('unfollow', user_id=user.user_id) }}">取消关注</a>
+        <a class="btn btn-default btn-lg btn-left" style="width:33%;float:left;"  role="button" href="{{ url_for('index') }}">返回主页</a>
+         </div>
+
+        {% else %}
+        <nav style="position: relative; bottom: 1px;" role="navigation">
+            <a class="btn btn-primary btn-lg pull-left btn-right" style="width:50%;"  role="button" href="{{ url_for('follow',user_id=user.user_id)}}">关注</a>
+        <a class="btn btn-default btn-lg pull-right btn-left" style="width:50%;" role="button" href="{{ url_for('index') }}">返回主页</a>
+        </nav>
+    {%  endif %}
+</div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#click_alert").click(function(){
+            $(".alert").show();
+        });
+        $(".click_close_one").click(function(){
+            $(".alert").hide();
+        });
+    });
+</script>
+<script>
+    var config_data = {{ wx_config|safe }};
+    var url ={{ pics_url|safe }};
+    var num_image = url.length;  //当前相册图片数量
+
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: config_data[0], // 必填，公众号的唯一标识
+        timestamp:config_data[2], // 必填，生成签名的时间戳
+        nonceStr:config_data[1], // 必填，生成签名的随机串
+        signature:config_data[3],// 必填，签名，见附录1
+        jsApiList: [
+            'chooseImage',
+            'previewImage',
+            'uploadImage'
+           ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+
+    var upavatar = {
+        localId: [],
+        serverId: []
+        };
+    function up_onepic(type) {
+        wx.chooseImage({
+            success: function (res) {
+                upavatar.localId = res.localIds;
+                if(res.localIds.length > 1)
+                {alert('已选择 ' + res.localIds.length + ' 张图片,' + '只能选择1张,请重新选择！');}
+                if(res.localIds.length == 1) {
+                    //alert('上传图片');
+                    wx.uploadImage({
+                        localId: upavatar.localId[0],
+                        isShowProgressTips: 1,
+                        success: function (res) {
+                            upavatar.serverId.push(res.serverId);
+                            var sI = upavatar.serverId;
+
+                            $.ajax({
+                                    url: '{{url_for("profile",user_id=g.user.user_id)}}',
+                                    type: 'POST',
+                                    data: {'usetype':type, 'serverid':sI[0]}
+                                })
+                                .done(function (data) {
+
+                                    if (data === 'error') {
+                                        alert('加载失败，请稍候再试');
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        if(data=="token_error")
+                                            alert('服务器异常');
+                                        else
+                                            location.reload(true);
+                                    }
+                                });
+                            },   //上传成功向后台发送serverId
+
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                            }
+                    });
+                }
+            }
+        });
+    }
+    //上传头像
+    document.querySelector('#upavatar').onclick = function(){
+          up_onepic("avatar");
+    };
+
+    //上传背景
+    document.querySelector('#upback').onclick = function(){
+          up_onepic("back");
+    };
+
+    // 头像预览
+    if(document.querySelector('#avatar_view')){
+        document.querySelector('#avatar_view').onclick = function(){
+            var avatar_url = $('#avatar_view').attr('src');
+            if(avatar_url){
+                var index = avatar_url.indexOf('?imageView2/1/w/100/h/100');
+                if(-1 != index){
+                  avatar_url = avatar_url.substring(0, index) + '?imageView2/1/w/400/h/400';
+                }
+            }
+            else{
+                return false;
+            }
+            avatar_url = encodeURI(avatar_url);
+            var avatar = [];
+            avatar.push(avatar_url);
+            wx.previewImage({
+                current: avatar[0],
+                urls:avatar
+            });
+        };
+    }
+
+
+    //  相册预览
+    document.querySelector('#preview').onclick = function () {
+        if(num_image > 0){
+            wx.previewImage({
+                current: url[0],
+                urls:url
+            });
+        }
+    };
+    function post_serverId(usetype,id)   //相册和头像图片的media_id发回后台都用这个函数，type用来区分相册还是头像
+    {
+        alert('进入ajax');
+
+        $.ajax({
+                url: "{{url_for('profile',user_id=g.user.user_id)}}",
+                type: 'POST',
+                data: {'usetype':usetype, 'serverid':id}
+            })
+            .done(function (data) {
+
+                if (data === 'error') {
+                    alert('加载失败，请稍候再试');
+                    return false;
+                }
+                else
+                {
+                    alert(data);
+                }
+            });
+    }
+    wx.error(function (res) {
+      alert(res.errMsg);
+});
+</script>
+{% endblock %}

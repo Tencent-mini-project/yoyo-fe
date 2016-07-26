@@ -1,0 +1,18 @@
+{% extends "guest_list.html" %}
+{% block body %}
+
+	{% for guest in guests %}
+        <div class="col-xs-12 col-sm-6 col-md-3" style="padding:0;margin:0px;">
+	    <div class="thumbnail">
+	       <a  href="{{guest.article_url}}"><img src="{{guest.img_url}}" ></a>
+       
+	    <div class="caption">
+		  <p style="text-align:center">{{guest.title}}</p>
+	    </div>
+		</div>
+		</div>
+	{% else %}
+			<h3>太不可思议了，居然没有符合你条件的嘉宾</h3>
+	{% endfor %}
+ 
+{% endblock %}

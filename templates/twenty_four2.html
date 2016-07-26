@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="zhuang"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/static/js/analysis.js?ver=1.0"></script>
+    <link href="/static/css/style.css?ver=1.1" rel="stylesheet"/>
+    <link href="/static/css/tietokentt.css" rel="stylesheet"/>
+    <link href="/static/css/24h.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/css/iconfont/iconfont.css?ver=1.0">
+    <title>武汉高校之恋-Online</title>
+</head>
+<body>
+    <header class="header_one posr">
+	<div class="arrow-back" onclick="javascript:history.back(-1)"><i class="iconfont">&#x5345;</i></div>
+        <div class="header_body width20">
+            <div class="switch_btn width3 left"><button class="btn down tl-bl" id="boy">男生</button></div>
+            <div class="switch_btn width3 left"><button class="btn" id="girl">女生</button></div>
+            <div class="switch_btn width3 left"><button class="btn tr-br" id="rank">周排行</button></div>
+        </div>
+        {% if g.user.show_index >= 0 %}
+            <div class="switch_state"><img class="switch_state_img" id="img_switch" src="/static/img/show.png" /></div>
+        {% else %}
+            <div class="switch_state"><img class="switch_state_img" id="img_switch" src="/static/img/hide.png" /></div>
+        {% endif %}
+
+    </header>
+    <!-- 点击男生或者刚开始默认显示的内容 start -->
+    <div id="boy_list">
+      <div class="appendone">
+      {% for boy in boys %}
+          <a class="boy" style="text-decoration:none;" href="{{ url_for('profile', user_id=boy.user_id) }}" data-id="{{ boy.last_seen }}">
+              <div class="pageOne" data-id="{{ boy.last_seen }}">
+                  <div class="page_img left">
+                      <div class="posr">
+                          <img src="{{ boy.avatar_path }}">
+                          {% if boy.album_num > 0 %}
+                            <div class='photo_online'><i  class='iconfont camera'>&#x5791;</i></div>
+                          {% endif %}
+                    </div>
+                  </div>
+                  <div class="page_body">
+                      <div class="page_name">
+                          <span>{{ boy.nickname }}</span>
+                          <span>{{ boys_count[loop.index - 1] }}个<i class='iconfont'>&#x5790;</i></span>
+                      </div>
+                      <div class="page_sex">
+                          <span><i class='iconfont man'>&#x5679;</i></span>
+                          <span>{{ boy.school }}</span>
+                          <span>{{ boy.status }}</span>
+                      </div>
+                      <div class="page_word">{{ boy.declare }}</div>
+                  </div>
+                  <div class="page_time">{{ boy.last_seen|datetimeformat }}</div>
+              </div>
+          </a>
+      {% endfor %}
+      </div>
+      {% if boys_len < 10 %}
+          <div class="loading"><button class="btn_loading" id="loading_one">没有更多了</button></div>
+      {% else %}
+          <div class="loading"><button class="btn_loading" id="loading_one">加载更多</button></div>
+      {% endif %}
+    </div>
+    <!-- 点击男生或者刚开始默认显示的内容 end -->
+    <!-- 点击女生显示的内容 start -->
+    <div class="dn" id="girl_list">
+        <div class="appendtwo">
+        {% for girl in girls %}
+          <a class="girl" style="text-decoration:none;" href="{{ url_for('profile', user_id=girl.user_id) }}" data-id="{{ girl.last_seen }}">
+              <div class="pageTwo" data-id="{{ girl.last_seen }}">
+                  <div class="page_img left">
+                      <div class="posr">
+                          <img src="{{ girl.avatar_path }}">
+                          {% if girl.album_num > 0 %}
+                            <div class='photo_online'><i  class='iconfont camera'>&#x5791;</i></div>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="page_body">
+                      <div class="page_name">
+                          <span>{{ girl.nickname }}</span>
+                          <span>{{ girls_count[loop.index - 1] }}个<i class='iconfont'>&#x5790;</i></span>
+                      </div>
+                      <div class="page_sex">
+                          <span><i class='iconfont woman'>&#x5678;</i></span>
+                          <span>{{ girl.school }}</span>
+                          <span>{{ girl.status }}</span>
+                      </div>
+                      <div class="page_word">{{ girl.declare }}</div>
+                  </div>
+                  <div class="page_time">{{ girl.last_seen|datetimeformat }}</div>
+              </div>
+          </a>
+        {% endfor %}
+        </div>
+        {% if girls_len < 10 %}
+            <div class="loading"><button type="button" class="btn_loading" id="loading_two">没有更多了</button></div>
+        {% else %}
+            <div class="loading"><button type="button" class="btn_loading" id="loading_two">加载更多</button></div>
+        {% endif %}
+    </div>
+    <!-- 点击女生显示的内容 end -->
+    <!-- 点击排行显示的内容 start -->
+    <div class="dn" id="rank_list">
+        <div class="appendthree"></div>
+        <div class="loading"><button class="btn_loading" id="loading_three">加载更多</button></div>   
+    </div>
+    <!-- 点击排行显示的内容 end --> 
+   
+    	<div class='alert dn'>
+            <div class="alert_content">
+                <div class="alert_a"><img id="alert_img" class="switch_state_img" src="/static/img/hide_b.png" /></div>
+                <div class="alert_b" id="alert_word">您已进入隐身模式，不会在24H中出现。不过其他人仍可在匹配系统中找到你。再点击状态按钮，课切换至公开模式。</div>
+                <div class="alert_c"><button class="close">关闭</button></div>
+            </div>
+        </div>
+<!-- 存放三个界面的json数据 -->
+
+ <div id="datathree" style="display: none">{{ json_rank }}</div>
+</body>
+<script  src="/static/js/huangOnline.js?version=1.0.1"></script>
+</html>

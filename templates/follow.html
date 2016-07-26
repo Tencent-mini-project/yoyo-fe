@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="zhuang"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/static/js/analysis.js?ver=1.0"></script>
+    <link href="/static/css/style.css?ver=1.1" rel="stylesheet"/>
+    <link href="/static/css/tietokentt.css" rel="stylesheet"/>
+    <link href="/static/css/24h.css" rel="stylesheet"/>
+    <link href="/static/css/iconfont/iconfont.css?ver=1.0" rel="stylesheet"/>
+    <title>武汉高校之恋-关注-粉丝</title>
+</head>
+<body>
+    <header class="header_one posr">
+	<div class="arrow-back" onclick="javascript:history.back(-1)"><i class="iconfont">&#x5345;</i></div>
+        <div class="header_body width20">
+            <div class="switch_btn  left" style="width:9rem;"><button class="btn down tl-bl" id="focus">我关注的</button></div>
+            <div class="switch_btn  left" style="width:9rem;"><button class="btn tr-br" id="followers">我的粉丝</button></div>
+        </div>
+    </header>
+    <div id="focus_list">
+        <div class="appendone">
+            {% for followed in followeds %}
+                <a class="followed" style="text-decoration:none;" href="{{ url_for('profile', user_id=followed.user_id) }}"
+                   data-page="{{ page }}" >
+                    <div class="page" data-id="{{ followed.last_seen }}">
+                        <div class="page_img left"><img src="{{ followed.avatar_path }}"></div>
+                        <div class="page_body">
+                            <div class="page_name">
+                                <span>{{ followed.nickname }}</span>
+                                <span>{{ followeds_count[loop.index - 1] }}个<i class='iconfont'>&#x5790;</i></span>
+                            </div>
+                            <div class="page_sex">
+                                {% if followed.sex == "男" %}
+                                    <span><i class='iconfont man'>&#x5679;</i></span>
+                                {% else %}
+                                    <span><i class='iconfont woman'>&#x5678;</i></span>
+                                {% endif %}
+                                <span>{{ followed.school }}</span>
+                                <span>{{ followed.status }}</span>
+                            </div>
+                            <div class="page_word">{{ followed.declare }}</div>
+                        </div>
+                        <div class="page_time">{{ followed.last_seen|datetimeformat_year }}</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        {% if followeds_len < 10 %}
+            <div class="loading"><button class="btn_loading" id="loading_one">没有更多了</button></div>
+        {% else %}
+            <div class="loading"><button class="btn_loading" id="loading_one">加载更多</button></div>
+        {% endif %}
+    </div>
+    <!-- 点击加载更多和刚开始默认显示的内容 end -->
+    <!-- 粉丝显示的内容 start -->
+    <div class="dn" id="followers_list">
+        <div class="appendtwo"></div>
+        <div class="loading"><button type="button" class="btn_loading" id="loading_two">加载更多</button></div>         
+    </div>
+    <!-- 点击粉丝显示的内容 end -->
+ <div id="datatwo" class="dn">{{ json_followers }}</div>
+</body>
+<script src="/static/js/follow.js"></script>
+</html>

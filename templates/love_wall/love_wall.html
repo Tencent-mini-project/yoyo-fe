@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% block title %}地大表白墙{% endblock %}
+{% block head %}
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    {{ super() }}
+	<link href="/static/css/love_wall.css" rel="stylesheet">
+	<style>
+	body{background-color: #F55A84;}
+	</style>
+{% endblock %}
+
+{% block content %}
+    <!-- 弹窗 -->
+	<div class='popcover dn'></div>
+	<!--  -->
+	<div class='cover'></div>
+	<div class='back iconfont dn'>Top</div>
+	<!-- page -->
+	<div class='page'>
+		<!-- header -->
+		<div class='header'>
+			<div class='inner'>
+				<div class='logo'></div>
+                <div class="more_info">
+                    <a href="http://whlove.vipsinaapp.com/">更多惊喜</a>
+                </div>
+				<div class='count'>
+					<span class='iconfont'></span>
+					<span class='count_num'>
+						<span class="num"><span class='hundredthousand'>{{ num[0] }}</span></span>
+						<span class="num"><span class='tenthousand'>{{ num[1] }}</span></span>
+						<span class="num"><span class='thousand'>{{ num[2] }}</span></span>
+						<span class="num"><span class='hundred'>{{ num[3] }}</span></span>
+						<span class="num"><span class='ten'>{{ num[4] }}</span></span>
+						<span class="num"><span class='one'>{{ num[5] }}</span></span>
+					</span>
+				</div>
+				<div class='search'>
+					<form action="" class="form-inline" role="form" method="post">
+                        <input type="text" name='name' required class='form-control' placeholder='看看自己被谁暗恋' id='search_content'>
+                        <input type="submit" name="search" value='搜索' class='btn btn-warning' id='search_button'>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end header -->
+		<!-- body -->
+		<div class='body'>
+			<div class='inner'>
+				<div class='info_list'>
+                    {% for story in storys %}
+					<div class='info clear' data-id='{{ story.id }}'>
+                        <div class='receiver'><span class='iconfont'>To:</span>{{ story.to_name }}
+                        </div>
+                        <div class='info_content'>
+						{{ story.content }}
+						</div>
+						<span class='date'><span class='iconfont'></span>{{ story.exp_time }}</span>
+						<span class='sender'><span class='iconfont'>From:</span>{{ story.from_name }}</span>
+					</div>
+                    {% endfor %}
+				</div>
+				<div class='more'>
+					{% if search  == 1 %}
+                        <a href='{{ url_for("love_wall") }}' class="btn btn-warning" style="width: 80%">返回</a>
+                    {% else %}
+                         <input type="button" value='加载更多' class='btn btn-warning' id='more_button'><span class='iconfont dn'>&#x5234;</span><br>
+                    {% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="margin_bottom" style="height:50px;"></div>
+		<!-- end body -->
+		<!-- footer -->
+		<div class='foote' style="position:fixed;bottom:0px;width:100%;z-index:99;">
+			<div class='inner'>
+				<div class='publish'><input type="button" value='我要表白' class='btn btn-danger btn-lg' id='biaobai_button'>
+                    <span class='iconfont heart'>&#x5790;</span>
+                </div>
+			</div>
+		</div>
+
+		<!-- end footer -->
+	</div>
+	<!-- end page -->
+	<script>
+	// 返回顶部
+	$(window).scroll(function(event) {
+		var h1 = $('body').scrollTop();
+		var h2 = parseInt($('.cover').css('height')) / 3;
+		if(h1 > h2){
+
+			$('.back').show('slow');
+
+		}else{
+
+			$('.back').hide('slow');
+
+		}
+	});
+	$('.back').click(function(){
+		$('body').animate({scrollTop: 0},
+			{
+				speed:500,
+				easing:'swing',
+				callback:function(){}
+			}
+		);
+	});
+	// 搜索
+	// 表单显示
+	// $('#search_button').click(function(){
+	// 	$('#more_button').addClass('dn');
+	// 	$('#back_button').removeClass('dn');
+	// });
+	// $('#back_button').click(function(){
+	// 	$('#more_button').removeClass('dn');
+	// 	$('#back_button').addClass('dn');
+	// });
+
+	// 我要表白
+	$('#biaobai_button').click(function(event) {
+		var $pop =
+		"<div class='pop dn'>"+
+		"<form action='' method='post' id='form_one' name='form_one'>"+
+			"<div class='form-group'>"+
+				"<label for='receiver'>接收人：</label>"+
+				"<input type='text' name='receiver' id='receiver' class='form-control' placeholder='你想发给谁呢' required>"+
+			"</div>"+
+			"<div class='form-group'>"+
+				"<label for='sender'>发送人：</label>"+
+				"<input type='text' name='sender' id='sender' class='form-control' value='匿名' required>"+
+			"</div>"+
+			"<div class='form-group'>"+
+				"<label for='submit_content'>内容：</label>"+
+				"<textarea name='content' id='submit_content' class='form-control' placeholder='快书写下你的爱意(3-50字)' required></textarea>"+
+			"</div>"+
+			"<div class='form-group clear'>"+
+				"<input type='button' class='btn btn-danger' id='cancel_button' value='取消'>"+
+				"<input type='submit' name='express' class='btn btn-success' id='submit_button'>"+
+			"</div>"+
+		"</form>"+
+	"</div>";
+		$('body').append($pop);
+		$('#cancel_button').click(function(event) {
+			$('.pop').hide().remove();
+			$('.popcover').hide();
+		});
+	    $("#submit_button").click(function(){
+        var x=document.form_one.receiver.value;
+        if(x.length<1 || x.length>10)
+            {alert("姓名为1-10个字！！！");
+             return false;
+            }
+        x=document.form_one.submit_content.value;
+        if(x.length<3 || x.length>50)
+            {alert("内容为3-50个字！！！");
+             return false;
+            }
+        x=document.form_one.sender.value;
+        if(x.length<1 || x.length>10)
+            {alert("姓名为1-10个字！！！");
+             return false;
+            }
+        });
+//		$('#submit_button').click(function(){
+//			return false;
+//		});
+		$('.popcover').show();
+		$('.pop').show();
+	});
+	// 加载更多ajax
+	$('#more_button').click(function(){
+        var id = $('.info:last-child').data('id');
+		$.ajax({
+			url: '{{ url_for("love_wall") }}',
+			type: 'POST',
+			data: {id: id}
+		})
+		.done(function(data) {
+			if(data === 'error') {
+				alert('加载失败，请稍候再试');
+				return false;
+			}
+			$('#more_button').next('span').show().addClass('animated infinite rotateIn');
+
+			console.log("success");
+			$.each(JSON.parse(data), function(index, val){
+			var info =
+			"<div class='info clear' data-id="+this.id+">"+
+				"<div class='receiver'><span class='iconfont'>To:</span>"+this.receiver+
+                "</div>"+
+				"<div class='info_content'>"+this.content+"</div>"+
+				"<span class='date'><span class='iconfont'></span>"+this.date+"</span>"+
+				"<span class='sender'><span class='iconfont'>From:</span>"+this.sender+"</span>"+
+			"</div>";
+			$('.info_list').append(info);
+			});	
+
+			$('#more_button').next('span').removeClass('animated infinite rotateIn').hide();
+		});
+		
+	});
+	</script>
+
+{% endblock %}

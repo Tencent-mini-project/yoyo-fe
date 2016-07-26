@@ -1,0 +1,217 @@
+*{margin:0;padding:0;}
+html,body{
+	background-color:#f7c4a4;
+}
+.mb10{margin-bottom:15px;}
+.image-poster{
+	width:100%;
+}
+.image-poster img{
+	width:100%;
+}
+/*报名部分样式*/
+.signUp{
+	margin:0 20px;
+}
+.signUp .header_title{
+	height:60px;
+	font-size:30px;
+	line-height: 60px;
+	color:#bc6225;
+}
+.signUp .name{
+	/*border:1px solid red;*/
+	width:100%;
+}
+.label{
+	/*border:1px solid red;*/
+	display:inline-block;
+	height:35px;
+	width:50px;
+	text-align:center;
+	float:left;
+	line-height: 35px;
+	color:#f7d1b9;
+	background:#bc6225;
+}
+.signUp .input_area{
+	/*border:1px solid red;*/
+	margin-left:50px;
+	height:35px;
+}
+.input_area input{
+	width:100%;
+	height:100%;
+	background: #f7d1b9;
+	border:none;
+	outline:none;
+	padding-left:5px;
+	box-sizing:border-box;
+}
+.input_area select{
+	-webkit-appearance:none;
+	width:100%;
+	height:100%;
+	background: #f7d1b9;
+	border:none;
+	outline:none;
+}
+.clear{
+	clear:both;
+}
+.joinReason label{
+	display:inline-block;
+	height:30px;
+	width:70px;
+	text-align:center;
+	line-height: 30px;
+	color:#f7d1b9;
+	background:#bc6225;	
+}
+.joinReason span{
+	opacity: .5;
+}
+.joinReason textarea{
+	width:100%;
+	height:50px;
+	background: #f7d1b9;
+	border:none;
+	outline:none;
+	padding:10px;
+	box-sizing:border-box;
+
+}
+.confirm{
+	width:100%;
+	/*border:1px solid red;*/
+	height:40px;
+}
+.confirm button{
+    font-size:22px;
+    font-weight:500;
+    width:100%;
+    height:100%;
+    /*border-radius:4px;*/
+    background-color:rgba(55, 55, 55, 0);
+    background: #bc6225;
+    outline:none;
+    border:none;
+    color:#f7d1b9;
+}
+/*报名成功页面样式*/
+body.success,html.success{
+	background:#F4D1B5;
+}
+.success_outbox{
+	margin-right: 20px;
+}
+.sign_success{
+	margin-bottom: 40px;
+}
+.sign_success img{
+	display: inline-block;
+	float:left;
+	width:100px;
+	margin-top: -20px;
+	/*border:1px solid red;*/
+}
+.sign_success .toWho{
+	font-size:25px;
+	margin:20px 0 20px 80px;
+	color:#BC6224;
+	font-weight: 900;
+}
+.time{
+	/*border:1px solid red;*/
+}
+.time img,.place img,.inform img{
+	display: inline-block;
+	float:left;
+	width:60px;
+	/*margin-top: -20px;*/
+	margin-top: -15px;
+	margin-left:20px;
+}
+.active_time,.active_place,.message_inform{
+	font-size:20px;
+	margin:20px 0 20px 100px;
+	color:#683F23;
+	font-weight: 900;	
+}
+.place{
+	/*border:1px solid red;*/
+}
+.place img{
+	margin-top:0px;
+}
+.word,.desc,.sponsor{
+	padding:10px 0px 20px 20px;
+	color:#bc6225;
+	line-height: 1.4;
+    font-size: 14px;
+	/*font-weight: 700;*/
+}
+.match_in{
+	/*border:1px solid red;*/
+	margin-left:20px;
+	height:35px;
+}
+.match_in button{
+	width:100%;
+	height:100%;
+	padding-left: 20px;
+	line-height: 35px;
+	font-size:25px;
+	font-weight: 900;
+	background-color:rgba(55, 55, 55, 0);
+    background: #694024;
+    outline:none;
+    border:none;
+    color:#f7d1b9;
+    box-sizing:border-box;
+}
+.desc span{
+	font-size:20px;
+	font-weight: 900;
+}
+.sponsor{
+	color: #694024;
+}
+.sponsor span{
+	font-size:16px;
+    font-weight: 700;
+}
+/*flash消息样式*/
+.alert-info .alert-link{
+    color:#245269
+}
+
+.alert-info{
+    color:#31708f;
+    background-color:#d9edf7;
+    border-color:#bce8f1
+}
+
+/*确认参加活动*/
+ul {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+ul, li {
+  list-style: none;
+}
+
+li {
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-left: 8px solid #BC6225;
+  display: block;
+  background: -webkit-linear-gradient(left, #F7D1B9, #F7D1B9);
+  padding: 10px;
+  font-size: 16px;
+}
+
+span {
+  color: #694024;
+}

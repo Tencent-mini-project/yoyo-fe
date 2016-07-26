@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://www.jsoops.com/demo/gcharts/js/api.js"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{school_rate|safe}});
+
+        var options = {
+          title: '各学校报名分布',
+          is3D: true,
+        };
+        var view = new google.visualization.DataView(data);
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>
+      <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable({{ school_sex_rate|safe }});
+
+  var options = {
+    title: '按男女的数量展示'
+  };
+
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+  chart.draw(data, options);
+
+}
+    </script>
+
+  </head>
+  <body>
+  <h3>根据统计数据合理分配各校参与人数</h3>
+    <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+  <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

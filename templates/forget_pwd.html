@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+{# 这个PCjs太大了，居然20KB，有点接受不了，求修改。。 #}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.initProv("#pro", "#city", "省", "市");
+    });
+</script>
+<style>
+#pubinfo { height:150px;}
+
+
+body{
+    padding-bottom:20px;
+    background-color: #eee;
+}
+/* 设置输入框们的高度 */
+.form-control{
+    position:relative;
+    height:40px;
+    -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+            box-sizing:border-box;
+    padding:7px;
+    font-size:16px;
+}
+/* 设置性别和状态按钮组高度 */
+.input-group .btn-group {
+    height: 40px;
+}
+
+/* 输入框前标签的颜色尝试           求颜色啊！！！*/
+.input-group-addon {
+color: #fff;
+background-color: #e58c7c;
+border-color: #e58c7c;
+}
+{# 有通用性，放入base.html
+/* 页面标题 */
+.title{
+    margin:0 0 8px 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;;
+    padding:0;
+    width:auto;
+    position:relative;
+    text-align: center;
+    line-height:40px;
+    height:40px;
+    background-color:#5caae6;
+    border:1px solid #4798d6;
+    font:Microsoft YaHei bold ;
+    font-size: 20px;
+    font-weight: bold;
+    color:white;
+}
+/* 尝试给按钮更换颜色 add by lee @14.8.21*/
+.btn-default:active, .btn-default.active{
+    background-color: #5caae6;
+    border-color:#428bca ;
+    color:white;
+}
+ #}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="title">找回密码</div>
+    <form class="form-horizontal" role="form" action="" method="post" name="forget_pwd">
+        {{ form.hidden_tag() }}
+        {% include 'flash.html' %}
+        <fieldset>
+            <legend style="margin-bottom:0.5em;">账号信息</legend>
+            <small>如果账号密码均忘了，请直接微信联系BeyondSkyWay</small>
+            {% for error in form.errors.email %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+            <div class="input-group" style="margin-bottom:0.5em;">
+                <span class="input-group-addon">邮箱</span>
+                {{ form.email (class="form-control", placeholder="填写注册时使用的邮箱")}}
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:12px;margin-bottom: 7px;">确定
+        </button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block title %}武汉跨校交友活动——做我男友一小时{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+            /* 设置输入框们的高度 */
+        .form-control {
+            position: relative;
+            height: 40px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 7px;
+            font-size: 16px;
+        }
+
+        /* 设置性别和状态按钮组高度 */
+        .input-group .btn-group {
+            height: 40px;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            background-color: rgb(193, 170, 114);
+        }
+
+        .content, .footer {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0px;
+            text-align: center;
+            width: 100%;
+        }
+
+        p, h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        .footer {
+            padding-top: 15px;
+            border-top: 1px solid #d5c59f;
+            color: #6a3427;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .footer p {
+            font-size: 12px;
+            padding: 1px;
+            margin: 0px;
+        }
+
+        .content, .footer {
+            background-color: rgb(193, 170, 114)
+        }
+
+        input[type="button"], input[type="submit"], input[type="reset"] {
+            -webkit-appearance: none;
+        }
+
+        textarea {
+            -webkit-appearance: none;
+        }
+
+        /* 14.10.26 */
+        .input-group span {
+            background-color: #b69968;
+            border: 1px solid #b68968;
+            color: #6a3427;
+        }
+
+        .input-group input {
+            background-color: #d5c59f;
+        }
+
+        .input-group select {
+            background-color: #d5c59f;
+        }
+
+        .btn-group label {
+            -webkit-box-shadow: 3px 3px 3px #b69968;
+            -moz-box-shadow: 3px 3px 3px #b69968;
+            box-shadow: 3px 3px 3px #b69968;
+            background-color: #d5c59f;
+            color: #6a3427;
+            margin: 3px;
+        }
+
+        input[type="button"], input[type="submit"], input[type="reset"], select {
+            -webkit-appearance: none;
+        }
+
+        textarea {
+            -webkit-appearance: none;
+        }
+
+        #commit {
+            width: 100%;
+            background-color: #6a3427;
+            color: #d5c59f;
+            border: 1px solid #b68968;
+        }
+        #confirm p input {
+            disabled: disabled;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="content">
+        <img src="http://static-juewangpo.qiniudn.com/poster1.jpg" width="100%" height="auto">
+        <img src="http://static-juewangpo.qiniudn.com/write.jpg" style="width:100%;">
+        <img src="http://static-juewangpo.qiniudn.com/sentence.jpg" style="width:100%;">
+
+        <br>
+        <br>
+
+        <div style="padding:0 8px 0 8px;">
+            <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:30px;"><p width="100%;">
+                这个11月约吗？约！由华中科技大学电信系发起，武汉高校之恋和华中科技大学学生会鼎力支持，联手电气、计算机、建规和人文学院倾力打造，各大高校（武大、地大、财经、华师等）倾情加盟的大型交友活动"做我男女友一小时"开始报名了！！11·15下午，相聚华科东九，这个11月，不再落寞！
+            </p></div>
+            {#
+            <a href="{{ url_for('activity',sex='boy') }}" class="btn btn-primary btn-lg btn-block">男生入口</a>
+            <a href="{{ url_for('activity',sex='girl') }}" class="btn btn-danger btn-lg btn-block">女生入口</a>
+#}
+            {% include 'flash.html' %}
+            <form class="form-horizontal" role="form" action="" method="post" name="match" id="match">
+                <fieldset style="margin-bottom:0.5em">
+                    <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+                        <span class="input-group-addon">手机号</span>
+                        <input autocomplete="off" class="form-control" id="phone" name="phone"
+                               placeholder="请输入11位手机号" type="text" value="">
+                    </div>
+                    {% if info %}
+                    <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+                        <span class="input-group-addon">验证码</span>
+                        <input autocomplete="off" class="form-control" id="code" name="code"
+                               placeholder="请输入短信中的ID" type="text" value="">
+                    </div>
+                    {% endif %}
+                    <div style="margin-top:10px;">
+                        {% if info %}
+                            <input id="commit" type="submit" name="commit" class="btn btn-primary btn-lg " value="查询">
+                            <span style="font-size: 16px; float: right"><a href="{{ url_for('activity_query') }}"><strong>手动发送短信</strong></a></span>
+                        {% else %}
+                            <input id="commit" type="submit" name="commit" class="btn btn-primary btn-lg " value="发送短信">
+                            <a href="{{ url_for('info_query') }}" style="font-size: 16px; float: right"><strong>对方信息查询入口</strong></a>
+                        {% endif %}
+                    </div>
+                </fieldset>
+            </form>
+            <div style="font-size: 14px;">校会旧版系统报名的朋友，请戳<a href="http://2.hustsuapp.sinaapp.com/one/sql.php">这里</a>查询配对信息</div>
+            <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:20px;">
+                <p width="100%;">关注微信公众号“华中科技大学学生会”和“武汉高校之恋”，了解活动详情。<br/>
+                <span style="font-size: 13px;">[注]本活动仅限武汉高校在校学生参与，活动现场会核对手机号，检查学生证和身份证</span></p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="footer navbar navbar-default " role="navigation">
+        <p><strong>Powered by </strong><a
+                href="http://mp.weixin.qq.com/s?__biz=MzA4MjYxNTAxOA==&mid=201189974&idx=1&sn=b4f0a9f4c3d28ac6ff029f591ba9a809#rd">©武汉高校之恋</a>
+        </p>
+
+        <p>©华中科技大学电子与信息工程系团学联</p>
+
+        <p>©华中科技大学校学生会</p>
+    <p>特别鸣谢：青啤蔡大大的指导帮助</p>
+    </nav>
+
+    <script>
+        $('#commit').click(function (event) {
+
+            var x = document.match.phone.value;
+            if (isNaN(x) || x.length != 11) {
+                alert("请输入11位手机号！！！");
+                return false;
+            }
+            x = document.match.code.value;
+            if (x.length > 4 || x.length < 1 || isNaN(x)) {
+                alert("请输入短信中的1-4位ID！！！");
+                return false;
+            }
+        });
+    </script>
+{% endblock %}

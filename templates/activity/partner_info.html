@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block title %}武汉跨校交友活动——做我男友一小时{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            background-color: rgb(193, 170, 114);
+        }
+
+        .content {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0px;
+            width: 100%;
+        }
+
+        .footer {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0px;
+            text-align: center;
+            width: 100%;
+        }
+
+        p, h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        .footer {
+            padding-top: 15px;
+            border-top: 1px solid #d5c59f;
+            color: #6a3427;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .footer p {
+            font-size: 12px;
+            padding: 1px;
+            margin: 0px;
+        }
+
+        .content, .footer {
+            background-color: rgb(193, 170, 114)
+        }
+
+        input[type="button"], input[type="submit"], input[type="reset"] {
+            -webkit-appearance: none;
+        }
+
+        textarea {
+            -webkit-appearance: none;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+        li span{
+            padding: 2px;
+            border-radius: 3px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <img src="http://static-juewangpo.qiniudn.com/write.jpg" style="width:100%;">
+
+        <div class="panel panel-default" style="background-color: rgb(193, 170, 114)">
+        <img src="{{ partner.pic_url }}" style="width:100%;"><br/>
+            <div class="panel-body" style="width:100%;">
+                <div class="media-body" style="width:100%;float:left;margin-left:2%;">
+                    <h4 class="media-heading"><strong>{{ partner.name }}</strong></h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="btn-warning" disabled>性别</span>
+                            {% if partner.sex == 'boy' %}男{% endif %}
+                            {% if partner.sex == 'girl' %}女{% endif %}
+                        </li>
+                        <li>
+                            <span class="btn-warning" disabled>学校</span>
+                            {{ partner.school }}
+                        </li>
+                        <li>
+                            <span class="btn-warning" disabled>年级</span>
+                            {{ partner.grade }} </br>
+                        </li>
+                        <li>
+                            <span class="btn-warning" disabled>生日</span>
+                            {{ partner.birthday }}
+                        </li>
+                        <li>
+                            <span class="btn-primary" disabled>身高</span>
+                            {{ partner.height }}
+                        </li>
+                        <li>
+                            <span class="btn-danger" disabled>电话</span>
+                            {{ partner.phone }}
+                        </li>
+                        <li>
+                            <span class="btn-success" disabled>性格特点</span>
+                            {% if partner.sex == 'boy' %}
+                                {% if 'a' in partner.personality %} 幽默 {% endif %}
+                                {% if 'b' in partner.personality %} 高冷 {% endif %}
+                                {% if 'c' in partner.personality %} 温柔 {% endif %}
+                                {% if 'd' in partner.personality %} 成熟 {% endif %}
+                                {% if 'e' in partner.personality %} 孩子气 {% endif %}
+                                {% if 'f' in partner.personality %} 上进 {% endif %}
+                                {% if 'g' in partner.personality %} 浪漫 {% endif %}
+                                {% if 'h' in partner.personality %} 学霸 {% endif %}
+                                {% if 'i' in partner.personality %} 粘人 {% endif %}
+                            {% else %}
+                                {% if 'a' in partner.personality %} 女汉子 {% endif %}
+                                {% if 'b' in partner.personality %} 活泼 {% endif %}
+                                {% if 'c' in partner.personality %} 文静 {% endif %}
+                                {% if 'd' in partner.personality %} 御姐 {% endif %}
+                                {% if 'e' in partner.personality %} 萝莉 {% endif %}
+                                {% if 'f' in partner.personality %} 知性 {% endif %}
+                                {% if 'g' in partner.personality %} 直率 {% endif %}
+                                {% if 'h' in partner.personality %} 高冷 {% endif %}
+                                {% if 'i' in partner.personality %} 撒娇 {% endif %}
+                            {% endif %}
+                        </li>
+                        <li>
+                            <span class="btn-info" disabled>个人简介</span>
+                            {{ partner.info }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="padding:0 8px 0 8px;">
+                {% include 'flash.html' %}
+                {#            <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:30px;"><p width="100%;">#}
+                {#                这个11月约吗？约！由华中科技大学电信系发起，联手华中科技大学学生会、电气、计算机、建规和人文学院倾力打造，武汉高校之恋鼎力支持，各大高校（武大、地大、财经、华师等）倾情加盟的大型交友活动"做我男女友一小时"开始报名了！！11·15下午，相聚华科东九，这个11月，不再落寞！#}
+                {#            </p></div>#}
+                <form class="form-horizontal" role="form" action="" method="post" name="match" id="match">
+                {% if offline %}
+                    {% if check == 0 %}
+                        <button style="width: 49%; border: 1px solid #b68968; color: #d5c59f; background-color: #6a3427" name="admit" class="btn btn-success btn-lg" value="{{ id }}">确认参加</button>
+                        <button style="width: 49%; border: 1px solid #b68968; color: #6a3427; background-color: #d5c59f;" name="deny" class="btn btn-default btn-lg" value="{{ id }}">不参加</button>
+                    {% elif check == 1 %}
+                        <div style="width:100%;height:auto;padding-top:10px;color:#6a3427;line-height:20px;">
+                            <p width="100%">
+                                <span style="font-size: 16px;"><strong>你已经确认参加活动！</strong></span>
+                            </p>
+                        </div>
+                    {% elif check == 2 %}
+                        <div style="width:100%;height:auto;padding-top:10px;color:#6a3427;line-height:20px;">
+                            <p width="100%">
+                                <span style="font-size: 16px;"><strong>你已经确认不参加活动！</strong></span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if offline %}
+                    <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:20px;">
+                        <p width="100%;">
+                            <span style="font-size: 13px;"><strong>[注]</strong> 请与对方提前沟通，双方在14号(周五)下午5点前确认参加则名额有效。<strong>若有一方不参加活动，则在活动当天现场进行匹配！</strong></span>
+                        </p>
+                    </div>
+                {% endif %}
+                    <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:20px;">
+                        <p width="100%;">
+                            <span style="font-size: 13px;"><strong>活动限量珍藏版明信片美团一分钱送<a style="font-size: 16px" href="http://t.cn/R7BivK6">猛戳这里</a></strong></span>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <nav class="footer navbar navbar-default " role="navigation">
+        <p><strong>Powered by </strong><a
+                href="http://mp.weixin.qq.com/s?__biz=MzA4MjYxNTAxOA==&mid=201189974&idx=1&sn=b4f0a9f4c3d28ac6ff029f591ba9a809#rd">©武汉高校之恋</a>
+        </p>
+
+        <p>©华中科技大学电子与信息工程系团学联</p>
+
+        <p>©华中科技大学校学生会</p>
+    </nav>
+
+
+{% endblock %}

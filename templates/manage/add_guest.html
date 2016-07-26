@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+{% include '/manage/manage.html' %}
+<h3>嘉宾信息</h3>
+{% include 'flash.html' %}
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="add_guest">
+        {{form.hidden_tag()}}
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="guest_id">编号:</label>
+            <div class="controls">
+                {{ form.guest_id(class = "span4") }}
+                {% for error in form.errors.guest_id %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="name">姓名:</label>
+            <div class="controls">
+                {{ form.name(class = "span4") }}
+                {% for error in form.errors.name %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="sex">性别:</label>
+            <div class="controls">
+                <div class="btn-group btn-group-justified" data-toggle="buttons" style="width: 150px;">
+                <label class="btn btn-default"><input onclick="changeColor('b')"  class="form-control" type="radio" name="sex" id="sex-one" value="男">男</label>
+                <label class="btn btn-default"><input onclick="changeColor('r')" class="form-control" type="radio" name="sex" id="sex-two" value="女">女</label>
+                </div>
+                {% for error in form.errors.sex %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="type">类型:</label>
+            <div class="controls">
+                <div class="btn-group btn-group-justified" data-toggle="buttons" style="width: 225px;">
+                    <label class="btn btn-default"><input class="form-control" type="radio" name="type" id="type-0" value="本科生">本科生</label>
+                    <label class="btn btn-default"><input class="form-control" type="radio" name="type" id="type-1" value="研究生">研究生</label>
+		            <label class="btn btn-default"><input class="form-control" type="radio" name="type" id="type-2" value="已工作">已工作</label>
+                </div>
+                {% for error in form.errors.type %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="email">邮箱:</label>
+            <div class="controls">
+                {{ form.email(class = "span4") }}
+                {% for error in form.errors.email %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="author">编辑:</label>
+            <div class="controls">
+                {{ form.author(class = "span4") }}
+                {% for error in form.errors.author %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="title">标题:</label>
+            <div class="controls">
+                {{ form.title(size = 50, class = "span4") }}
+                {% for error in form.errors.title %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="description">简介:</label>
+            <div class="controls">
+                {{ form.description(cols = 150, rows = 4, class = "span4") }}
+                {% for error in form.errors.description %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="img_url">图片链接:</label>
+            <div class="controls">
+                {{ form.img_url(cols = 150, rows = 2, class = "span4") }}
+                {% for error in form.errors.img_url %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <label class="control-label" for="article_url">文章链接:</label>
+            <div class="controls">
+                {{ form.article_url(cols = 150, rows = 2, class = "span4") }}
+                {% for error in form.errors.article_url %}
+                    <span class="help-inline">[{{error}}]</span><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class="btn btn-primary" type="submit" value="添加">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+html{
+    background-color:#F5FAFF !important;
+}
+/* 相册上面的文字说明样式开始 */
+.margin_info{
+    margin-left:1rem;
+    height:10rem;
+	margin-top:0px;
+}
+.margin_info p:first-child{
+    margin-top:1.5rem;
+    margin-bottom:1rem;
+    font-size:1.5rem;
+    font-weight:900;
+    color:rgb(75,75,75);
+}
+.margin_info p:nth-child(2){
+    font-size:1.5rem;
+    color:rgb(108,108,108);
+}
+.clip_div{
+    display:inline-block;
+	width:31%;
+    margin-bottom:.5rem;
+	overflow:hidden;
+	position:relative;
+}
+.img{
+    position:absolute;
+    width:100%;
+    height:auto;
+/*     display:inline-block;
+    margin-left:1%;
+    margin-bottom:.5rem; */
+/*     margin:0; */
+}
+.close_del{
+    position:absolute;
+    right:0;
+    top:0;
+    z-index:99;
+}
+#plus{
+    background-color:rgb(237, 237, 237);
+    border-radius:5px;
+    width:30.5%;
+    display:inline-block;
+    font-size:5rem;
+    border:1px dashed black;
+/*     margin-left:1%; */
+    margin-bottom:.5rem;
+}
+.plus{
+    position:absolute;
+    top:50%;
+    left:50%;
+    color:white;
+    font-size:5rem;
+}
+
+/* 弹出框样式开始 */
+.alert{
+    background-color:rgba(149, 149, 149, .38);
+}
+.alert .alert_content{
+    margin:0 auto;
+    width:27rem;
+    height:16.5rem;
+    border:1px solid #eee;
+    background-color:white;
+    border-radius:0.4rem;
+	z-index:1000;
+    margin-top:13.8rem;
+}
+.alert_a{
+    padding:0;
+    color:rgb(75,75,75);
+    font-size:1.5rem;
+    text-align:center;
+}
+.alert_a p{
+    margin:0px;
+    height:6.1rem;
+    line-height:6.1rem;
+    font-weight:700;
+}
+/* 弹出框样式结束 */
+.margin_confirm{
+    margin:0rem 3.5rem 1rem 3.5rem;
+}
+.margin_cancel{
+    margin:0 3.5rem 1.4rem 3.5rem;
+}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}武汉跨校交友活动——做我男友一小时{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+    html,body
+     {height:100%;width:100%;background-color:rgb(193,170,114);}
+.content,.footer{max-width:780px;margin:0 auto; padding:0px;text-align:center;width:100%;}
+p,h1,h2,h3,h4{text-align:center;}
+.footer{padding-top:15px;border-top:1px solid #d5c59f;color:#6a3427;border-left:none;border-right:none;border-bottom:none;}
+.footer p{font-size:12px;padding:1px;margin:0px;}
+.content,.footer{background-color:rgb(193,170,114)}
+
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+-webkit-appearance: none;
+}
+textarea {  -webkit-appearance: none;}
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="content">
+        <img src="http://static-juewangpo.qiniudn.com/poster1.jpg" width="100%" height="auto">
+        <img src="http://static-juewangpo.qiniudn.com/write.jpg" style="width:100%;">
+        <img src="http://static-juewangpo.qiniudn.com/sentence.jpg" style="width:100%;">
+
+        <br>
+        <br>
+
+        <div style="padding:0 8px 0 8px;">
+            {% for item in get_flashed_messages() %}
+                <div class="alert alert-warning" role="alert">{{ item|safe }}</div>
+            {% endfor %}
+            <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:30px;"><p width="100%;">
+                这个11月约吗？约！由华中科技大学电信系发起，武汉高校之恋和华中科技大学学生会鼎力支持，联手电气、计算机、建规和人文学院倾力打造，各大高校（武大、地大、财经、华师等）倾情加盟的大型交友活动"做我男女友一小时"开始报名了！！11·15下午，相聚华科东九，这个11月，不再落寞！
+            </p></div>
+{#
+            <a href="{{ url_for('activity',sex='boy') }}" class="btn btn-primary btn-lg btn-block">男生入口</a>
+            <a href="{{ url_for('activity',sex='girl') }}" class="btn btn-danger btn-lg btn-block">女生入口</a>
+#}
+            <strong><h2 style="font: bold; color: #E61914">报名已截止，是否通过和对方信息查询系统即将开放，具体消息请微信关注“武汉高校之恋”</h2></strong>
+            <div style="width:100%;height:auto;padding-top:20px;color:#6a3427;line-height:20px;">
+                <p width="100%;">关注微信公众号“华中科技大学学生会”和“武汉高校之恋”，了解活动详情。<br/>
+
+                <div style="text-align:left;padding:0px;margin:0px;font-size:bold;">
+                    <strong>线上协同宣传平台：</strong><br/>微信：中国地质大学(武汉)，华农艺术团，资讯民大，地大团委第四纪，武汉蹭课
+                </div>
+                <span style="font-size: 13px;">[注]本活动仅限武汉高校在校学生参与，活动现场会核对手机号，检查学生证和身份证</span></p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="footer navbar navbar-default " role="navigation">
+        <p><strong>Powered by </strong><a
+                href="http://mp.weixin.qq.com/s?__biz=MzA4MjYxNTAxOA==&mid=201189974&idx=1&sn=b4f0a9f4c3d28ac6ff029f591ba9a809#rd">©武汉高校之恋</a>
+        </p>
+
+        <p>©华中科技大学电子与信息工程系团学联</p>
+
+        <p>©华中科技大学校学生会</p>
+    </nav>
+
+{% endblock %}

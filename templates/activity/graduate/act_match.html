@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class="success">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,maximum-scale=1.0,minimum-scale=1.0,initial-scale=1.0,user-scalable=no">
+	<title>活动报名</title>
+	<link rel="stylesheet" href="/static/css/activity/index.css?ver=1.02" />
+</head>
+<body class="success">
+	<div class="success_outbox">
+		<div class="sign_success">
+			<img src="/static/img/activity/1.png"/>
+			<div class="toWho">
+				{{ name }}<br/>
+				恭喜你已报名成功!
+			</div>
+		</div>
+		<div style="border-bottom:1px dashed #694024;margin-left:20px;"></div>
+		<div class="time clear">
+			<img src="/static/img/activity/2.png"/>
+			<div class="active_time">
+				6月14号（星期天）
+			</div>
+		</div>
+		<div class="place clear">
+			<img src="/static/img/activity/3.png"/>
+			<div class="active_place">
+				武汉大学测绘学院大学生活动中心
+			</div>
+		</div>
+		<div class="inform clear">
+			<img src="/static/img/activity//4.png"/>
+			<div class="message_inform">
+				短信通知
+			</div>
+		</div>
+		<div style="border-bottom:1px dashed #694024;margin-left:20px;"></div>
+		<div class="word">
+			高小恋温馨提示：<br/>
+			可以进入匹配系统寻找队友一起参加活动哦~<br/>
+			如果参与人数过多，我们会优先选择“自行组队或者匹配组队成功”的同学。
+		</div>
+		<div class="match_in">
+            {% if had_login == 0 %}
+                <a href="{{ url_for('login') + '?phone=' + phone }}">
+                    <button class="match_relate">注册匹配系统</button>
+                </a>
+            {% else %}
+                <a href="{{ url_for('match2') + '?phone=' + phone }}">
+                    <button class="match_relate">进入匹配系统</button>
+                </a>
+            {% endif %}
+		</div>
+		<div class="desc">
+			<span>说明：</span><br/>
+			 1.如果报名人数过多，我们会根据报名信息、匹配社区的资料完善程度和是否组队参加来筛选参与者。<br/>
+			2.我们会在活动前2天发送短信，请按说明及时回复，确认是否参加。<br/>
+			3.未注册匹配社区的同学请尽快注册，寻找异性搭档，组队参加活动～
+		</div>
+        <img src="/static/img/activity/lottery.jpg" style="width: 100%">
+<!-- 		<div class="sponsor">
+			<span>主办方：</span><br/>
+			武汉高校之恋
+			比翼情缘
+			中国电信
+		</div> -->
+	</div>
+</body>

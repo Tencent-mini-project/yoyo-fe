@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.pub(placeholder="60字以内", maxlength=60) }}
+    <input type="submit" value="提交">
+    {% for error in form.errors.pub %}
+        <span style="color:red;">[{{ error }}]</span><br>
+    {% endfor %}
+    </form>
+{% for pub in publist %}
+    <div>
+        <img src='{{ pub.author.avatar_path }}' width="50">{{ pub.author.nickname }} {{ pub.timestamp|string|truncate(16,killwords=True,end='') }}
+        {{ pub.author.school }}
+        {{ pub.subject }}
+    </div>
+{% else %}
+    哇噻，还没有人发表过！
+{% endfor %}
+
+
+{% endblock %}

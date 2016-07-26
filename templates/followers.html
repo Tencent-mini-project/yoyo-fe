@@ -1,0 +1,65 @@
+{%  extends 'base.html' %}
+<!--结构重新弄  by strong 2014.09.01-->
+{% block head %}
+         {{ super() }}
+<style>
+body{
+    padding-top: 50px;
+}
+.photo{
+    position:relative;
+	float:left;
+    width:30%;
+	padding-left:5px;
+	padding-right:5px;
+    height:76px;
+	padding-top:13px;
+	border-top:1px solid #eee;
+}
+.message{
+    float:left;
+	width:70%;
+	height:76px;
+	padding-top:8px;
+	border-top:1px solid #eee;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<nav id="header_outer" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+   <div class="navbar-header" style="position:relative;">
+        <div class="index" style="position:absolute;right:5px;top:8px;"><a class="btn btn-primary " type="button" href="{{ url_for('index') }}">返回主页</a>
+        </div>
+		 <a class="navbar-brand" href="#">{{ title }}</a>
+
+   </div>
+
+</nav>
+{% for user in follow %}
+<div class="d" onclick="location.href='{{url_for('profile',user_id=user.user_id)}}'">
+    <div class="photo" >
+        <img src="{{ user.avatar_path }}" width="60px">
+    </div>
+    <div class="message">
+        {{ user.nickname }} &nbsp;&nbsp;
+        {% if user.sex == "男" %}
+        <i class="icon iconfont man">&#x5679;</i>
+        {% else %}
+        <i class="icon iconfont woman">&#x5678;</i>
+        {% endif %}
+
+        {% if user.role == 2 %}
+        <i class="icon iconfont">&#x5234;</i>
+        {% elif user.role == 3 %}
+        <i class="icon iconfont">&#x5456;</i>
+        {% endif %}
+        <br/>{# 有时间找 男/女 的图标，用if user.sex==u'男'来判断显示的图标 #}
+        {{ user.school }}&nbsp;&nbsp; {{ user.status }}<br/>
+        冒泡： {{ user.last_seen|string|truncate(10,killwords=True,end='') }}
+    </div>
+</div>
+    {% else %}
+        这里空空如也，快去匹配系统找朋友吧
+    {% endfor %}
+{% endblock %}

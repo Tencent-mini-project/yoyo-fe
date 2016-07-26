@@ -1,0 +1,110 @@
+.page,.pageOne,.pageTwo,.pageThree{
+    height:9.5rem;
+    border-bottom:1px solid #E4E8EE;
+    position:relative;
+    background-color:#F5FAFF;
+}
+.page_img{
+    width:9.5rem;
+	height:9.5rem;
+	text-align:center;
+/* 	border:1px solid red; */
+}
+.page_img img{
+    width:7.5rem;
+	height:7.5rem;
+	margin-top:1rem;
+    border-radius:.5rem;
+}
+.page_body{
+    margin-left:9.5rem;
+/* 	border:1px solid yellow; */
+	height:9.5rem;
+}
+.page_name,.page_sex,.page_word{
+    width:100%;
+/* 	border:1px solid red; */
+}
+.page_name{
+    height:3.5rem;
+    line-height:4.5rem;
+}
+.page_name span:first-child{
+    font-size:1.8rem;
+    color:#000000;
+    margin-right:0.6rem;
+    font-weight:600;
+}
+.page_name span:last-child{
+    color:#DD9EBE;
+    font-size:1.05rem;
+}
+.page_name span:last-child i{
+    color:#FF679D !important;
+    font-size:1.6rem !important;
+}
+.page_sex{
+    position:relative;
+    height:2rem;
+    line-height:2.5rem;
+    font-size:0.8rem;
+/* 	border:1px solid red; */
+}
+.page_sex span:first-child .man{
+    color:#22D5F9 !important;
+    font-size:1.5rem !important;
+    margin-right:0.2rem;
+	vertical-align:middle;
+}
+.page_sex span:first-child .woman{
+    color:#FF679D !important;
+    font-size:1.5rem !important;
+    margin-right:0.2rem;
+}
+.page_sex span:nth-child(2){
+    color:white;
+    background-color:#E5C8AB;
+    padding:1px;
+    border-radius:0.4rem;
+    margin-right:0.4rem;
+}
+.page_sex span:last-child{
+    color:white;
+    background-color:#CEC5FC;
+    padding:1px;
+    border-radius:0.4rem;
+    font-weight:600;
+}
+.page_word{
+    line-height:4rem;
+    font-size:1.2rem;
+    color:#736756;
+	height:3.5rem;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.page_time{
+    position:absolute;
+    right:0.25rem;
+    top:0.25rem;
+    color:#917B71;
+	font-size:1rem;
+}
+
+/* 加入照相机的样式 */
+.photo_online{
+	margin:0px;
+	position:absolute;
+	bottom:0rem;
+	right:.5rem;
+	width:2.1rem;
+	height:1.6rem;
+	/*border:1px solid red;*/
+	background-color:white;
+	border-radius:2px;
+}
+.camera{
+    font-size:2rem !important;
+    color:#FF9B9B !important;
+    line-height:1.6rem;
+}

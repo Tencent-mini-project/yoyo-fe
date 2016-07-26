@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}现场确认{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .form-check {
+            float: right;
+        }
+        .btn_float{
+            float: right;
+            width: 20%;
+        }
+        li{
+            margin-bottom: 10px;
+        }
+        li span{
+			display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+		}
+        .btn_choice{
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="inline-block">
+            <form class="navbar-left" role="form" method="post" name="search">
+                <div class="form-group">
+                    <input style="float:left;width:78%;" id="phone" name="phone" type="text" class="form-control" placeholder="请输入电话号码">
+                    <button id="search" name="search" type="submit" class="btn_float btn btn-primary" value="search">搜索</button>
+                </div>
+
+                <p style="font-size: 16px;clear:both;"><strong>已签到：{{ checked }}</strong></p>
+            </form>
+        </div>
+        <div class="inline-block">
+            {% include 'flash.html' %}
+        </div>
+        {% if actor %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="btn-warning" disabled>姓名</span>
+                            {{ actor.name }}
+                            <span class="btn-success" disabled>性别</span>
+                            {% if actor.sex == 'boy' %}男{% endif %}
+                            {% if actor.sex == 'girl' %}女{% endif %}
+                            <span class="btn-danger" disabled>状态</span>
+                            {{ status }}
+                        </li>
+                        <li>
+                            <span class="btn-info" disabled>会场</span>
+                            {{ addr }}
+                            <span class="btn-danger" disabled>电话</span>
+                            {{ actor.phone }}
+                        </li>
+                        <li>
+                            <span class="btn-primary" disabled>同伴信息</span>
+                            {{ partner.name }} | {{ partner.phone }} | {{ partner_status }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <img class="media-object" src="{{ actor.pic_url }}"
+                         style="max-height: 100%; width: 100%">
+                </div>
+            </div>
+
+            <form action="" method="post" name="check" class="form-check" role="form">
+                {% if is_check %}
+                    <button style="width: 150px" class="btn_choice btn btn-warning" type="submit" name="check"
+                            value="{{ actor.id }}" disabled>
+                        已经签到
+                    </button>
+                {% else %}
+                    <button style="width: 100px" class="btn_choice btn btn-primary" type="submit" name="check"
+                            value="{{ actor.id }}">
+                        签到
+                    </button>
+                {% endif %}
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        $('#search').click(function (event) {
+            var x = document.search.phone.value;
+            if (isNaN(x) || x.length != 11) {
+                alert("请输入11位手机号！！！");
+                return false;
+            }
+        });
+    </script>
+{% endblock %}

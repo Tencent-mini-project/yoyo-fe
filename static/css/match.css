@@ -1,0 +1,461 @@
+/* reset.css 1.01
+*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,
+textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,nav{font-style:normal;font-weight:normal;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:o;}
+
+/*取消点击出现边框*/
+a,button,input,select,div.setting{color:#666;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+
+/*各页面通用背景样式*/
+body,html{
+	background:-webkit-linear-gradient(#D5EDFF,#FCEBFF);
+	background:-o-linear-gradient(#D5EDFF,#FCEBFF);
+	background: -moz-linear-gradient(#D5EDFF,#FCEBFF);
+	background: linear-gradient(#D5EDFF,#FCEBFF);
+	overflow: hidden;
+}
+.right{
+	float: right;
+}
+.content_match_items{
+	width:100%;
+	height:100%;
+	z-index: 99;
+}
+.header_two{
+	position:relative !important;
+}
+/*匹配欢迎页面的样式*/
+
+/*标题中设置按钮的图标样式 开始*/
+.setting{
+    position:absolute;
+    right:1rem;
+    top:0rem;
+}
+.setting .iconfont{
+    color:white !important;
+    font-size:3rem !important;
+
+}
+/*标题中设置按钮的图标样式 结束*/
+
+.introduceWord{
+	margin-top: 2.5rem;
+	margin-bottom: 0rem;
+	/*border: 1px solid red;*/
+	font-size: 1.7rem;	
+}
+.introduceWord .iconfont{
+	font-size:2.0rem !important;
+}
+
+.activeWord{
+	width:100%;
+	height:29rem;
+	/*border: 1px solid red;*/
+}
+.activeWord p{
+	display: block;
+	position:absolute;
+	font-size:2.1rem;
+	font-weight: 900;
+}
+.activeWord p.tag_0{
+	left:3.3rem;
+	top:4.5rem;
+	color:#FF3535;
+}
+.activeWord p.tag_1{
+	right:4.3rem;
+	top:7.9rem;
+	color: #577AE9;
+}
+.activeWord p.tag_2{
+	right:11.7rem;
+	top:11.4rem;
+	color: #404040;
+}
+.activeWord p.tag_3{
+	left:6.1rem;
+	top:15.9rem;
+	color:#858585;
+}
+.activeWord p.tag_4{
+	right:2.5rem;
+	top:16.9rem;
+	color: #B49B41;
+}
+.activeWord p.tag_5{
+	left:4.1rem;
+	top:22.3rem;
+	color:#FF6300;
+}
+.activeWord p.tag_6{
+	right:8.7rem;
+	top:24.3rem;
+	color:#2F9639;
+}
+
+/*最下面的文字样式*/ 
+/*匹配欢迎页面和完善资料提醒页面公用。*/
+.end_word{
+	/*padding:2.5rem;*/
+	line-height: 2rem;
+	font-size: 1.7rem;
+	color:#89AEF2;
+	position:absolute;
+	bottom:2.5rem;
+	left:2.5rem;
+	/*border:1px solid red;*/
+}
+/*完善资料页面的样式*/
+.alertWord{
+	margin-top:8rem;
+	color:#282828;
+	font-size: 1.5rem;
+	/*border: 1px solid red;*/
+	font-weight: 500;
+}
+.alertWord p{
+	line-height: 2.25rem;
+}
+.prefect_info_btn{
+	margin-top: 6.9rem;
+}
+
+/*匹配条件选择界面样式*/
+.out_box{
+	min-width:25rem;
+	height:auto;
+	margin:0 3rem;
+	background: white;
+	margin-top:2rem;
+	border-radius: 1rem;
+}
+.in_box{
+	/*width: 22.5rem;*/
+	height:auto;
+	margin:0 2rem;
+	/*border:1px solid red;*/
+}
+.box_header{
+	height:4.2rem;
+	line-height: 4.2rem;
+	font-size: 1.8rem;
+	font-weight: 800;
+/*	font-family: STHeitiSC-Light;*/
+	color:#2DD5F6;
+	border-bottom: 1px solid #CACACA;
+}
+.match_sex{
+	height:6.5rem;
+	border-bottom: 1px solid #CACACA;
+}
+.sex,.status{
+	width:30%;
+}
+.small_title{
+	position: absolute;
+	top:-.7rem;
+	left:50%;
+	/*border:1px solid red;*/
+	font-size: 1.1rem;
+	background: white;
+	width:3rem;
+	margin-left:-1.5rem;
+	color:#979797;
+}
+
+.small_title_more{
+    position: absolute;
+	top:-.7rem;
+	left:50%;
+	/*border:1px solid red;*/
+	font-size: 1.1rem;
+	background: white;
+	width:6rem;
+	margin-left:-2.5rem;
+	color:#979797;
+}
+
+.button_radio{
+	margin-top:1.6rem;
+	font-size:1.7rem ;
+	color:#979797 ;
+	/*width:6rem ;*/
+	height:3rem ;
+	display: inline-block;
+	line-height: 3rem ;
+	border-radius:4px ;
+	background-color:rgba(55, 55, 55, 0);
+    outline:none;
+}
+.checked,.bg{
+	background-color: #22D2F5 !important;
+	color:white !important;
+}
+.match_status{
+	height:10.6rem;
+	border-bottom: 1px solid #CACACA;
+}
+/*工作地选择*/
+.match_workPlace{
+	/*width:21rem;*/
+	/*border:1px solid red;*/
+	height:3.1rem;
+	margin:0 auto;
+	padding-top:1rem;
+}
+.match_school{
+	height:7.3rem;
+	border-bottom: 1px solid #CACACA;
+}
+
+.match_school select{
+    width:92%;
+	height:3.1rem;
+	margin-top:2.1rem;
+	margin-left:-.3rem;
+	border-radius:5rem;
+	background:url("/static/img/sanjiao.png") no-repeat scroll 95% center transparent;
+}
+
+#match_school{
+/*	width:21rem;*/
+	width:92%;
+	height:3.1rem;
+	margin-top:2.1rem;
+	margin-left:-.3rem;
+	border-radius:5rem;
+}
+.match_hometown{
+	height:6.1rem;
+}
+/*//选择框样式*/
+select{
+	-webkit-appearance:none;
+	border:1px solid #CACACA;
+	color:#979797;
+	border-radius: 0;
+    font-size: 1.7rem;
+	padding-left:.5rem;
+	background:url("/static/img/sanjiao.png") no-repeat scroll 90% center transparent;
+}
+select#match_school{
+	background:url("/static/img/sanjiao.png") no-repeat scroll 95% center transparent;
+}
+.hometown,#work_pro,#work_city{
+	width:46%;
+	height:3.1rem;
+}
+.hometown{
+	margin-top:1.5rem ;
+}
+#hometown_pro,#work_pro{
+	/*margin-right:-0.2rem;*/
+	border-top-left-radius:5rem;
+	border-bottom-left-radius:5rem;
+}
+/*#work_city{
+	margin-left: -0.3rem;
+}
+#hometown_city{
+	margin-left: -0.1rem;
+}*/
+#hometown_city,#work_city{
+	margin-left:-0.3rem;
+	border-top-right-radius:5rem;
+	border-bottom-right-radius:5rem;
+}
+/*#hometown_city{
+	margin-left:-0.3rem;
+}*/
+/*条件确定按钮样式*/
+.confirm_div{
+	/*width:25rem;*/
+	margin:0 3rem;
+	/*border:1px solid red;*/
+}
+.option_confirm{
+	width:100%;
+	height:4.5rem;
+	font-size:2.1rem;
+	margin-top: 1rem;
+	border-radius: 1rem;
+	font-weight:400;
+    background-color:rgba(55, 55, 55, 0);
+    /*border:1px solid white;*/
+    border:none;
+    outline:none;
+}
+
+
+/*匹配页面样式*/
+.three_line_poem{
+	margin-top:6.5rem;
+	margin-left:3rem ;
+	font-size:1.7rem;
+	color:#89AEF2;
+	line-height: 133%;
+	font-weight: 700;
+	height:30.5rem;
+}
+.match_btn_div{
+	position:absolute;
+	bottom:5rem;
+	color:white;
+	width:100%;
+}
+/*button_match可以在匹配这个模块通用*/
+.button_match{
+	border:1px solid #89AEF2;
+	width:18rem;
+	height:5rem;
+	font-size:2.1rem;
+	color:#89AEF2;
+	border-radius:50rem;
+    font-weight:900;
+    background-color:rgba(55, 55, 55, 0);
+    outline:none;
+}
+.button_match:active,.button_match:hover{
+	background: #89AEF2;
+	color:white !important;
+}
+/*点击的时候添加一下两个类*/
+.button_match_checked{
+	background: #89AEF2;
+}
+.color_white{
+	color:white !important;
+}
+
+/*匹配结果页面样式*/
+.match_result_outbox{
+	margin-left:2.5rem;
+	margin-right:2.5rem;
+}
+/*@media and screen(max-height: 600px){
+	html,body{
+		overflow-y:auto !important; 
+	}
+	.match-top{
+		margin-top: 5.5rem !important;
+	}
+	..match_btn_div .button_match{
+		position:relative !important;
+		margin-top:1rem !important;
+		margin-bottom:1rem !important;
+	}
+}*/
+.matched{
+	margin-top:3.1rem;
+	/*width:26rem;*/
+/*	margin-left:2rem;
+	margin-right:2rem;*/
+	/*height:30.5rem;*/
+	height:auto;
+	/*border:1px solid red;*/
+}
+.matched a{
+    outline: none;
+}
+.matched .image{
+/*	width:26rem;
+	height:26rem;*/	
+	width:100%;
+	height:auto;
+	min-height: 26rem;
+	margin-bottom: -0.3rem;
+}
+.matched .image img{
+	width:100%;
+}
+.matched .match_mes{
+	/*width:26rem;*/
+	width:100%;
+	/*height:20%;*/
+	height:20%;
+    min-height: 50px;
+	/*border:1px solid red;*/
+	background-color: white;
+}
+/*姓名那一排的样式*/
+.match_mes ul.one{
+	/*border:1px solid red;*/
+	padding-top:0.3rem;
+	margin-left: 1rem;
+}
+.match_mes ul.one li{
+	display: inline-block;
+	/*border:1px solid red;*/
+}
+.match_mes ul.one li:first-child{
+	font-size: 1.6rem;
+	line-height: 104%;
+	color:black;
+	font-weight: 400;
+}
+.match_mes ul.one li:nth-child(2){
+	margin-left:.5rem;
+}
+.man{
+    color:#22D5F9 !important;
+}
+.woman{
+	color:#FF679D !important;
+}
+.match_mes ul.one li:last-child{
+	color:#FF679D !important;
+    font-size:1.6rem !important;	
+}
+/*学校那一排的样式*/
+.match_mes ul.two{
+	display: block;
+	position:absolute;
+	/*border:1px solid red;*/
+	bottom: .5rem;
+	left:.5rem;
+}
+.match_mes ul.two li{
+	display: inline-block;
+	/*border:1px solid red;*/
+	font-size: .9rem;
+	line-height: 104%;
+}
+.match_mes ul.three{
+	display: block;
+	position: absolute;
+	top:.5rem;
+	right:1rem;
+	/*border:1px solid red;*/
+}
+.match_mes ul.three li{
+	display: inline-block;
+    margin-left: 5px;
+	/*border:1px solid red;*/
+}
+.match_mes ul.three li:first-child{
+	display: inline-block;
+	width:1.5rem;
+	font-weight: 400;
+}
+.match_mes ul.three li:last-child{
+	font-size:1.5rem;
+	font-weight: 500;
+}
+.match_mes span{
+	display: block;
+	position: absolute;
+	bottom:.5rem;
+	right:1rem;
+}

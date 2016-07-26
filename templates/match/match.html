@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>匹配系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0,maximum-scale = 1.0,minimum-scale=1.0,user-scalable = no" />
+    <link rel="stylesheet" type="text/css" href="/static/css/iconfont/iconfont.css?ver=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/match.css?ver=1.01">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <script src="/static/js/analysis.js?ver=1.0"></script>
+</head>
+<body>
+    <div class="content_match">
+        <header class="header_two center">
+            <div class ="posr">
+                <div class="arrow-back" onclick="javascript:window.location='{{ url_for('index') }}'"> <i class="iconfont">&#x5345;</i>
+                </div>
+                <p>匹配系统</p>
+                <div class="setting"> <i class="iconfont ">&#x5794;</i>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div id="match-init" class="three_line_poem">
+        你站在桥上看风景
+        <br>
+        看风景的人在楼上看你
+        <br>
+        明月装饰了你的窗子
+        <br>你装饰了别人的梦
+    </div>
+
+    <div id="notify" class="alertWord center" style="display: none">
+        <p id="notify-msg">
+        </p>
+    </div>
+    <div class="content_match_items dn">
+        <header class="header_two center posr">
+            <div class="posr">
+                <p>匹配系统</p>
+                <div class="setting"><i class="iconfont ">&#x5794;</i>
+                </div>
+            </div>
+        </header>
+        <form action="" method="post" name="match">
+            <div class="out_box">
+                <div class="in_box">
+                    <div class="box_header center">筛选条件</div>
+                    <div class="match_sex button_radio_group center posr">
+                        <label class="button_radio sex {% if match_filter['sex']=='男' %}checked{% endif %} mr10">
+                            <input type="radio" value="男生" id="boy" name="sex" hidden >男生</label>
+                        <label class="button_radio sex {% if match_filter['sex']=='女' %}checked{% endif %} ml10">
+                            <input type="radio" value="女生" id="girl" name="sex" hidden>女生</label>
+                        <div class="sex small_title">性别</div>
+                    </div>
+                    <div class="match_status center posr">
+                        <label class="button_radio status {% if match_filter['status']=='本科生' %}checked{% endif %}">
+                            <input type="radio" value="本科生" id="undergraduate" name="status" hidden>本科生</label>
+                        <label class="button_radio status {% if match_filter['status']=='研究生' %}checked{% endif %}">
+                            <input type="radio" value="研究生" id="master" name="status" hidden>研究生</label>
+                        <label class="button_radio status {% if match_filter['status']=='已工作' %}checked{% endif %} worked" >
+                            <input type="radio" value="已工作" id="worked" name="status" hidden>已工作</label>
+                        <div class="status small_title">状态</div>
+                        <div class="match_workPlace" style="display: none">
+                            <select class="workPlace" id="work_pro" name="work_pro">
+                                <option>{{ match_filter['work_pro'] }}</option>
+                            </select>
+                            <select class="workPlace" id ="work_city" name="work_city">
+                                <option>{{ match_filter['work_city'] }}</option>
+                            </select>
+                            <div id="status_work" class="status small_title_more">状态-工作地</div>
+                        </div>
+                    </div>
+                    <div class="match_school center posr">
+                        {{ form.hidden_tag() }}
+                        {{ form.school(class="form-control") }}
+                        <div class="school small_title">学校</div>
+                    </div>
+                    <div class="match_hometown center posr">
+                        <select class="hometown" id="hometown_pro" name="home_pro">
+                            <option>{{ match_filter['home_pro'] }}</option>
+                        </select>
+                        <select class="hometown" id ="hometown_city" name="home_city">
+                            <option>{{ match_filter['home_city'] }}</option>
+                        </select>
+                        <div class="small_title">家乡</div>
+                    </div>
+                </div>
+            </div>
+            <div class="confirm_div">
+                <button type="submit" class="option_confirm bg">确定</button>
+            </div>
+        </form>
+    </div>
+    <div class="match_result_outbox">
+        <div id="matched" class="matched">
+        </div>
+    </div>
+    <div class="match_btn_div center">
+        <button id="match" class="button_match ">匹配</button>
+    </div>
+</body>
+<script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/js/pro_city.js"></script>
+<script type="text/javascript" src="/static/js/match_options_items.js"></script>
+<script>
+    // 初始判断sex点击状态
+    var sex = "{{match_filter['sex']}}";
+    if( sex == '男' ){
+        $("#boy").trigger("click");
+
+    }else {
+        $("#girl").trigger("click");
+    }
+
+    // 初始判断status是否显示和点击状态
+    var status = '{{match_filter['status']}}';
+    if( status == '已工作' ){
+        $("#worked").trigger("click");
+        $(".match_status").css("height", "10.6rem");
+        $('.match_workPlace').show();
+    }else if(status == '研究生'){
+        $("#master").trigger("click");
+        $(".match_status").css("height", "7.5rem");
+    }else{
+        $("#undergraduate").trigger("click");
+        $(".match_status").css("height", "7.5rem");
+    }
+
+    // 点击匹配按钮修改样式
+    $('#match').click(function(){
+        var height = document.body.clientHeight;
+        //$(".match_mes").height(height/10);
+        if(height  < 500){
+            $("html,body").css("overflow-y","auto");
+            $(".match_btn_div").css({"position":"relative","margin-top":"1rem","margin-bottom":"1rem","bottom":"0rem"});
+            $(".matched").css("margin-top","5.5rem");
+        }
+    });
+    // 设置按钮
+    $(".content_match .setting").click(function(){
+        $('#notify').css('display', 'none');
+        $('#match-init').css('display', 'none');
+        $(".content_match").hide();
+        $(".match_btn_div").hide();
+        $(".content_match_items").show();
+    });
+
+    $(".content_match_items .setting").click(function(){
+        $(".content_match").show();
+        $('#notify').css('display', 'none');
+        $('#match-init').css('display', 'none');
+        $(".match_btn_div").show();
+        $(".content_match_items").hide();
+    });
+
+    $(function(){
+        $.initProv("#hometown_pro", "#hometown_city","{{ match_filter['home_pro'] }}", "{{ match_filter['home_city'] }}");
+        $.initProv("#work_pro", "#work_city","{{ match_filter['work_pro'] }}", "{{ match_filter['work_city'] }}");
+    })
+    </script>
+</html>

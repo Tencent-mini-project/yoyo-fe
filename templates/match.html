@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+<!--把匹配系统的高度调高到40px；并且设置调整了界面下端的按钮 2014.09.01 strong-->
+<style>
+body{
+		margin-top:60px;
+		overflow:hidden;
+    }
+	.match{
+	 background-color:#eee;
+	}
+.input-group,.btn-group {
+    height: 40px;
+
+    }
+
+/* 设置输入框们的高度 */
+.form-control{
+    position:relative;
+    height:40px;
+    -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+            box-sizing:border-box;
+    padding:7px;
+    font-size:16px;
+}
+.match{
+    padding-top:5px;
+}
+.match1{
+    width:75%;
+	height:145px;
+	float:left;
+	background-color:#eee;
+}
+.match2{
+   width:25%;
+   height:145px;
+   float:left;
+   padding-top:5px;
+   padding-left:0px;
+   padding-right:2px;
+
+   background-color:#eee;
+}
+.oko{
+    clear:both;
+    padding-top:5px;
+	background-color:#eee;
+	}
+.bq{
+    width:15%;
+    float:left;
+    font-family:'Microsoft YaHei';
+    font-weight:bold;
+    padding:9px 0px;
+    text-align:center;
+	margin-left:-3px;
+    height:40px;
+	background-color:#eee;
+	}
+.input{
+    width:85%;
+	float:left;
+
+	}
+.nav-one,.nav-two,.nav-three{
+    width:100%;
+    margin-bottom:0px;
+	padding-right:10px;
+	position:fixed;
+	bottom:0px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<nav id="header_outer" class="navbar  navbar-default navbar-fixed-top" role="navigation" >
+   <div class="navbar-header" style="position:relative;"style="width:100%">
+        <div class="index" style="position:absolute;right:5px;top:8px;"><a class="btn btn-primary " type="button" href="{{ url_for('index') }}">返回主页</a>
+        </div>
+		 <a class="navbar-brand" href="#">匹配系统</a>
+    </div>
+</nav>
+<form  class="form-horizontal" action="" method="post" name="match">
+<div class="match">
+<div class="match1">
+
+	<div class="oko">
+	    <div class="bq" >学校</div>
+        <div class="input">
+            {{ form.hidden_tag() }}
+            {# 如何选择：“不限学校” #}
+           {{ form.school(class="form-control") }}
+        </div>
+	</div>
+	<div class="oko">
+	    <div class="bq" >性别</div>
+        <div class="input">
+            <div id="sex" >
+                <div  class="btn-group btn-group-justified" data-toggle="buttons">
+                <label id="one"  class="btn btn-default {% if g.user.sex=='女' %}active{% endif %}" ><input  class="form-control " id="sex-0" name="sex" type="radio" value="男" {% if g.user.sex=='女' %}checked{% endif %}>男</label>
+                <label id="two"  class="btn btn-default {% if g.user.sex=='男' %}active{% endif %}" ><input   class="form-control " id="sex-1" name="sex" type="radio" value="女" {% if g.user.sex=='男' %}checked{% endif %}>女</label>
+                </div>
+            </div>
+        </div>
+	</div>
+	<div class="oko">
+	    <div class="bq" >状态</div>
+        <div class="input">
+            <div id="status">
+                <div  class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label id="statusone" class="btn btn-default {% if g.user.status=='本科生' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-0"value="本科生" {% if g.user.status=='本科生' %}checked{% endif %}>本科生</label>
+                    <label id="statustwo" class="btn btn-default {% if g.user.status=='研究生' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-1"value="研究生" {% if g.user.status=='研究生' %}checked{% endif %}>研究生</label>
+			        <label id="statusthree" class="btn btn-default {% if g.user.status=='已工作' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-2"value="已工作" {% if g.user.status=='已工作' %}checked{% endif %}>已工作</label>
+                </div>
+            </div>
+        </div>
+	</div>
+
+</div>
+<div class="match2"><input type="submit" class="btn btn-info" value="匹配" style="width:100%;height:136px;padding:3px;background-color:#5caae6;border:1px solid #4798d6;"></div>
+</div>
+</form>
+
+<div style="width:100%;padding-left:5px;padding-right:5px;background-color:white;">
+{% for error in form.errors.sex %}
+<span style="color:red;">[{{ error }}]</span>
+{% endfor %}
+    {% for error in form.errors.status %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+{% if code==0 %}
+
+<span style="color:red;">[内测期间用户较少，学校建议选择"不限"]</span>
+{% elif code==1 %}
+<table>
+    <tr>
+        <td><img src="{{ user.avatar_path }}"></td>
+        <td>
+            {{ user.nickname }}
+            {% if user.sex == "男" %}
+            <i class="icon iconfont man">&#x5679;</i>
+            {% else %}
+            <i class="icon iconfont woman">&#x5678;</i>
+            {% endif %}
+
+            {% if user.role == 2 %}
+            <i class="icon iconfont">&#x5234;</i>
+            {% elif user.role == 3 %}
+            <i class="icon iconfont">&#x5456;</i>
+            {% endif %}
+            <br/>{# 有时间找 男/女 的图标，用if user.sex==u'男'来判断显示的图标 #}
+            {{ user.school }}<br/>
+            {{ user.status }}<br/>
+            注册时间：{{ user.regtime }}<br/>
+            最近登录：{{ user.last_seen }}
+        </td>
+    </tr>
+</table>
+</div>
+<div class="nav-one container">
+    <a class="btn btn-primary btn-lg pull-left btn-right" role="button" style="width:50%;" href="{{ url_for('profile', user_id=user.user_id) }}">Ta的档案</a>
+<a class="btn btn-default btn-lg pull-right btn-left" role="button" style="width:50%;" href="{{ url_for('index') }}">返回主页</a>
+</div>
+
+{% elif code==2 %}
+<img src="http://static-juewangpo.qiniudn.com/imgbulb_idea.jpg"><br/>
+<span>啊哦，暂时没有符合所选条件的用户，赶紧邀请朋友注册吧~点击右上角图标分享朋友圈~</span>
+     <a class="btn btn-primary btn-lg " role="button" style="width:100%;" href="{{ url_for('index') }}">返回主页</a>
+{% elif code==3 %}
+
+{% for message in get_flashed_messages() %}
+    <div class="container">
+[{{ message }}]<br/>
+{% endfor %}
+    <img src="http://static-juewangpo.qiniudn.com/imgbulb_sad.jpg">
+    <a class="btn btn-primary btn-lg " role="button" style="width:100%;" href="{{ url_for('index') }}">返回主页</a>
+    </div>
+{% elif code==4 %}
+ {% for message in get_flashed_messages() %}
+    <div class="container">
+
+[{{ message }}]
+{% endfor %}
+    <br/><br/>
+    <a class="btn btn-primary btn-lg " role="button" style="width:100%;" href="{{ url_for('edit') }}">完善您的资料</a>
+{% endif %}
+</div>
+{% endblock %}

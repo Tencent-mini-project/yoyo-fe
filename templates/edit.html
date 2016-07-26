@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+<!--把下面的按钮处理   by strong  2014.08.22-->
+
+{% block head %}
+    {{ super() }}
+    {# 这个PCjs太大了，居然20KB，有点接受不了，求修改。。 #}
+<script type="text/javascript">
+$(document).ready(function(){
+    $.initProv("#home_pro", "#home_city","{{ places['home_pro'] }}", "{{ places['home_city'] }}");
+    $.initProv("#loc_pro", "#loc_city","{{ places['loc_pro'] }}", "{{ places['loc_city'] }}");
+});
+</script>
+
+<style>
+#pubinfo { height:150px;}
+#prinfo  { height:100px;}
+.birth-year
+{}
+/* 设置输入框们的高度 */
+.form-control{
+    position:relative;
+    height:40px;
+    -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+            box-sizing:border-box;
+    padding:7px;
+    font-size:16px;
+}
+/* 设置性别和状态按钮组高度 */
+.input-group .btn-group {
+    height: 40px;
+}
+/* 取消按钮的圆角  通用性，          已放入base.html
+.btn-left{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.btn-right{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+*/
+/* 尝试使用背景色#eee */
+body{
+    background-color: #eee;
+}
+</style>
+
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="padding-bottom:2px">
+    <div class="title" >编辑资料</div>
+<form class="form-horizontal" role="form" action="" method="post" name="edit">
+{{ form.hidden_tag() }}
+
+<fieldset style="margin-bottom:0.5em">
+ <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">昵称</span>
+         {{ form.nickname (class="form-control", placeholder="2到10位字母、数字或汉字")}}
+ </div>
+{% for error in form.errors.nickname %}
+<span style="color:red;">[{{ error }}]</span><br/>
+{% endfor %}
+ <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">学校</span>
+         {{ form.school (class="form-control")}}
+ </div>
+
+ <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+
+		<span class="input-group-addon"> 状态</span>
+		<div class="btn-group btn-group-justified" data-toggle="buttons">
+            <label class="btn btn-default btn-left {% if g.user.status=='本科生' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-0" value="本科生" {% if g.user.status=='本科生' %}checked{% endif %}>本科生</label>
+            <label class="btn btn-default {% if g.user.status=='研究生' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-1" value="研究生" {% if g.user.status=='研究生' %}checked{% endif %}>研究生</label>
+			<label class="btn btn-default {% if g.user.status=='已工作' %}active{% endif %}"><input class="form-control" type="radio" name="status" id="status-2" value="已工作" {% if g.user.status=='已工作' %}checked{% endif %}>已工作</label>
+		</div>
+</div>
+{% if g.user.status == '已工作' %}
+    <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+        <span class="input-group-addon">工作地</span>
+        <div style="margin:0;padding:0;display:block">
+            <select class="form-control pull-left btn-left" name="loc_pro" id="loc_pro" style="width:50%;"></select>
+            <select class="form-control pull-right " name="loc_city" id="loc_city" style="width:50%;"></select>
+        </div>
+    </div>
+{% endif %}
+{% for error in form.errors.status %}<span style="color:red;">[{{ error }}]</span><br>{% endfor %}
+ <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">学号</span>
+         {{ form.studID (class="form-control", placeholder="学号或毕业证号")}}
+ </div>
+{% for error in form.errors.studID %}<span style="color:red;">[{{ error }}]</span><br>{% endfor %}
+<br/>
+ <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">年级</span>
+         {{ form.grade (class="form-control", maxlength=18, placeholder="年级或单位")}}
+ </div>
+{% for error in form.errors.grade %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">家乡</span>
+	    <div style="margin:0;padding:0;display:block">
+		 <select class="form-control pull-left btn-left" name="home_pro" id="home_pro" style="width:50%;"></select>
+		 <select class="form-control pull-right " name="home_city" id="home_city" style="width:50%;"></select>
+        </div>
+</div>
+
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">生日</span>
+    <select class="form-control pull-left" name="byear" id="byear" value = {{ byear }} style="width:50%;">
+        {% for val in range(1980,2003) %}
+        <option value={{ val }} {% if val==byear %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+    </select>
+    <select class="form-control pull-right" name="bmonth" id="bmonth" style="width:50%;">
+        {% for val in range(1,13) %}
+        <option value={{ val }} {% if val==bmonth %}selected{% endif %}>{{ val }}</option>
+        {% endfor %}
+    </select>
+ </div>
+ {% for error in form.errors.bday %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">身高</span><input class="form-control" name="height" type="number" min="100" max="250" value="{{ g.user.height }}"><span class="input-group-addon">厘米</span>
+</div>
+</fieldset>
+{#
+    {% for error in form.errors.height %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+
+<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">生日</span><div class="picker" id="picker3"></div>
+ </div>
+#}
+
+<label for="favorite" class="label-control" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">兴趣爱好</label>
+    <div style="margin-left:0.2em;margin-right:0.2em;margin-bottom:1em;">
+        {{ form.favorite (class="form-control", maxlength=100, placeholder="100字以内")}}
+    </div>
+{% for error in form.errors.favorite %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+<label for="declare" class="label-control" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">个性签名</label>
+    <div style="margin-left:0.2em;margin-right:0.2em;margin-bottom:1em;">
+        {{ form.declare (class="form-control", maxlength=140, placeholder="140字以内")}}
+    </div>
+{% for error in form.errors.declare %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+<label for="pubinfo" class="label-control" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">个人简介</label>
+    <div style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+        {{ form.pubinfo (class="form-control", maxlength=300, placeholder="会被别人看到哦，请认真填写，不许超过300字呢~")}}
+    </div>
+{% for error in form.errors.pubinfo %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+<hr/>
+<fieldset style="margin-top:1em;margin-left:0.2em;margin-right:0.2em;">
+<legend style="font-size:14px;">私密信息(双向关注的好友可见)</legend>
+<label for="pubinfo" class="label-control" style="margin-bottom:0.5em;">联系方式</label>
+{% for error in form.errors.contact %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+   {{ form.contact (class="form-control", maxlength=50, placeholder="微信或邮箱，双向关注的好友可见")}}
+
+ {% for error in form.errors.contact %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+ <label for="prinfo" class="label-control" style="margin:0.5em 0.2em 0.5em 0.2em;">私密说明</label>
+    <div style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+        {{ form.prinfo (class="form-control", placeholder="140字以内的私密说明")}}
+    </div>
+{% for error in form.errors.prinfo %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+</fieldset>
+<div style="text-align:center;margin:0em 0.2em 0em 0.2em;"> 
+<input type="submit" class="btn btn-primary btn-lg pull-left btn-right" style="width:50%;" value="提交修改">
+<a type="button" class="btn btn-default btn-lg pull-right btn-left"  href="{{ url_for('index') }}" style="width:50%;text-decoration:none;">返回主页</a>
+</div>
+</form>
+</div>
+
+<script>
+/***
+ * 插件名称: 中国省市信息联动插件
+ */
+/*   若这里的数据修改了变了，config里的PRO_CITY也来同步变，不仅序列位置要一致，为了init默认值找到，具体内容也要一致   add by lee @14.9.1   */
+$._cityInfo = [{"n":"湖北","c":["武汉市","黄石市","十堰市","宜昌市","襄樊市","鄂州市","荆门市","孝感市","荆州市","黄冈市","咸宁市","随州市","恩施自治州","仙桃市","潜江市","天门市","神农架林区"]},
+{"n":"湖南","c":["长沙市","株洲市","湘潭市","衡阳市","邵阳市","岳阳市","常德市","张家界市","益阳市","郴州市","永州市","怀化市","娄底市","湘西自治州"]},
+{"n":"北京市","c":["北京市"]},
+{"n":"天津","c":["天津市"]},
+{"n":"上海","c":["上海市"]},
+{"n":"重庆","c":["重庆市"]},
+{"n":"河北","c":["石家庄市","唐山市","秦皇岛市","邯郸市","邢台市","保定市","张家口市","承德市","沧州市","廊坊市","衡水市"]},
+{"n":"山西","c":["太原市","大同市","阳泉市","长治市","晋城市","朔州市","晋中市","运城市","忻州市","临汾市","吕梁市"]},
+{"n":"辽宁","c":["沈阳市","大连市","鞍山市","抚顺市","本溪市","丹东市","锦州市","营口市","阜新市","辽阳市","盘锦市","铁岭市","朝阳市","葫芦岛市"]},
+{"n":"吉林","c":["长春市","吉林市","四平市","辽源市","通化市","白山市","松原市","白城市","延边自治州"]},
+{"n":"黑龙江","c":["哈尔滨市","齐齐哈尔市","鹤岗市","双鸭山市","鸡西市","大庆市","伊春市","牡丹江市","佳木斯市","七台河市","黑河市","绥化市","大兴安岭地区"]},
+{"n":"江苏","c":["南京市","无锡市","徐州市","常州市","苏州市","南通市","连云港市","淮安市","盐城市","扬州市","镇江市","泰州市","宿迁市"]},
+{"n":"浙江","c":["杭州市","宁波市","温州市","嘉兴市","湖州市","绍兴市","金华市","衢州市","舟山市","台州市","丽水市"]},
+{"n":"安徽","c":["合肥市","芜湖市","蚌埠市","淮南市","马鞍山市","淮北市","铜陵市","安庆市","黄山市","滁州市","阜阳市","宿州市","巢湖市","六安市","亳州市","池州市","宣城市"]},
+{"n":"福建","c":["福州市","厦门市","莆田市","三明市","泉州市","漳州市","南平市","龙岩市","宁德市"]},
+{"n":"江西","c":["南昌市","景德镇市","萍乡市","九江市","新余市","鹰潭市","赣州市","吉安市","宜春市","抚州市","上饶市"]},
+{"n":"山东","c":["济南市","青岛市","淄博市","枣庄市","东营市","烟台市","潍坊市","济宁市","泰安市","威海市","日照市","莱芜市","临沂市","德州市","聊城市","滨州市","荷泽市"]},
+{"n":"河南","c":["郑州市","开封市","洛阳市","平顶山市","安阳市","鹤壁市","新乡市","焦作市","濮阳市","许昌市","漯河市","三门峡市","南阳市","商丘市","信阳市","周口市","驻马店市"]},
+{"n":"广东","c":["广州市","深圳市","珠海市","汕头市","韶关市","佛山市","江门市","湛江市","茂名市","肇庆市","惠州市","梅州市","汕尾市","河源市","阳江市","清远市","东莞市","中山市","潮州市","揭阳市","云浮市"]},
+{"n":"甘肃","c":["兰州市","金昌市","白银市","天水市","嘉峪关市","武威市","张掖市","平凉市","酒泉市","庆阳市","定西市","陇南市","临夏自治州","甘南自治州"]},
+{"n":"四川","c":["成都市","自贡市","攀枝花市","泸州市","德阳市","绵阳市","广元市","遂宁市","内江市","乐山市","南充市","眉山市","宜宾市","广安市","达州市","雅安市","巴中市","资阳市","阿坝自治州","甘孜自治州","自治州"]},
+{"n":"贵州","c":["贵阳市","六盘水市","遵义市","安顺市","铜仁地区","毕节地区","黔西南自治州","黔东南自治州","黔南自治州"]},
+{"n":"海南","c":["海口市","三亚市","五指山市","琼海市","儋州市","文昌市","万宁市","东方市","澄迈县","定安县","屯昌县","临高县","白沙自治县","昌江自治县","乐东自治县","陵水自治县","保亭自治县","琼中自治县"]},
+{"n":"云南","c":["昆明市","曲靖市","玉溪市","保山市","昭通市","丽江市","思茅市","临沧市","楚雄自治州","红河自治州","文山自治州","西双版纳自治州","大理自治州","德宏自治州","怒江自治州","迪庆自治州"]},
+{"n":"青海","c":["西宁市","海东地区","海北自治州","黄南自治州","海南自治州","果洛自治州","玉树自治州","海西自治州"]},
+{"n":"陕西","c":["西安市","铜川市","宝鸡市","咸阳市","渭南市","延安市","汉中市","榆林市","安康市","商洛市"]},
+{"n":"广西","c":["南宁市","柳州市","桂林市","梧州市","北海市","防城港市","钦州市","贵港市","玉林市","百色市","贺州市","河池市","来宾市","崇左市"]},
+{"n":"西藏","c":["拉萨市","昌都地区","山南地区","日喀则地区","那曲地区","阿里地区","林芝地区"]},
+{"n":"宁夏","c":["银川市","石嘴山市","吴忠市","固原市","中卫市"]},
+{"n":"内蒙古","c":["呼和浩特", "阿拉善盟", "包头", "赤峰", "东胜", "海拉尔", "集宁", "临河", "通辽", "乌海", "乌兰浩特", "锡林浩特"]},
+{"n":"新疆","c":["乌鲁木齐", "阿克苏", "阿勒泰", "阿图什", "博乐", "昌吉", "东山", "哈密", "和田", "喀什", "克拉玛依", "库车", "库尔勒", "奎屯", "石河子", "塔城", "吐鲁番", "伊宁"]},
+{"n":"台湾","c":["台北市","高雄市","基隆市","台中市","台南市","新竹市","嘉义市","台北县","宜兰县","桃园县","新竹县","苗栗县","台中县","彰化县","南投县","云林县","嘉义县","台南县","高雄县","屏东县","澎湖县","台东县","花莲县"]},
+{"n":"香港","c":["九龙","新界","香港岛"]},
+{"n":"澳门","c":["澳门"]},
+{"n":"亚洲","c":["日本","韩国","新加坡","马来西亚","泰国","伊朗","以色列","沙特","阿联酋"]},
+{"n":"美洲","c":["美国","加拿大","墨西哥","巴西","阿根廷"]},
+{"n":"非洲","c":["埃及","埃塞俄比亚","南非","索马里","马达加斯加"]},
+{"n":"欧洲","c":["德国","俄罗斯","法国","英国","意大利","芬兰","罗马尼亚","梵蒂冈"]},
+{"n":"大洋洲","c":["澳大利亚","新西兰","瑙鲁","斐济","密克罗尼西亚"]},
+{"n":"球外","c":["月亮","火星","太阳","三体星","M87星云","42号宇宙"]}
+];
+
+$.initProv = function(prov, city, defaultProv, defaultCity) {
+    var provEl = $(prov);
+    var cityEl = $(city);
+    var hasDefaultProv = (typeof(defaultCity) != 'undefined');
+
+    var provHtml = '';
+
+    provHtml += '<option value="-1">请选择</option>';
+    for(var i = 0; i < $._cityInfo.length; i++) {
+        provHtml += '<option value="' + i + '"' + ((hasDefaultProv && $._cityInfo[i].n == defaultProv) ? ' selected="selected"' : '') + '>' + $._cityInfo[i].n + '</option>';
+    }
+    provEl.html(provHtml);
+    $.initCities(provEl, cityEl, defaultCity);
+    provEl.change(function() {
+        $.initCities(provEl, cityEl);
+    });
+};
+
+$.initCities = function(provEl, cityEl, defaultCity) {
+    var hasDefaultCity = (typeof(defaultCity) != 'undefined');
+    if(provEl.val() != '' && parseInt(provEl.val()) >= 0) {
+        var cities = $._cityInfo[parseInt(provEl.val())].c;
+        var cityHtml = '';
+
+        cityHtml += '<option value="0">请选择</option>';
+        for(var i = 0; i < cities.length; i++) {
+            cityHtml += '<option value="' + i  + '"' + ((hasDefaultCity && cities[i] == defaultCity) ? ' selected="selected"' : '') + '>' + cities[i] + '</option>';
+        }
+        cityEl.html(cityHtml);
+    } else {
+        cityEl.html('<option value="-1">请选择</option>');
+    }
+};
+
+</script>
+{% endblock %}

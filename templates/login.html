@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block head %}
+   {{ super() }}
+   <style>
+   body{
+       background-color:#eee;
+   }
+   .form-signin{
+       max-width:330px;
+       padding:15px;
+       margin:0 auto;
+   }
+   .form-signin .form-control:focus {
+        z-index: 2;
+    }
+   .form-signin input[type="email"]{
+       margin-bottom:-1px;
+       border-bottom-right-radius: 0;
+       border-bottom-left-radius: 0;
+   }
+   .form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+   .form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+   .form-signin .form-signin-heading {
+  margin-bottom: 10px;
+}
+
+   .logo {
+background-image: url("http://static-juewangpo.qiniudn.com/imglogo_big.jpg");
+}
+.logo {
+height: 100px;
+width: 100px;
+margin: 0 auto;
+margin-bottom: -10px;
+background-size: 100px 100px;
+}
+#forgetpwd {
+    float: left;
+    margin-left: -5px;
+    color: #246183;
+    line-height: 14px;
+    font-size: 14px;
+    padding: 15px 10px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <br/>
+
+    <div id="logo" class="logo"></div>
+    <span style="text-align: center;"><h3><strong>高校之恋</strong></h3></span>
+    <br/>
+
+    <form action="" method="post" name="login" class="form-signin" role="form">
+        {{ form.hidden_tag() }}
+        {% include 'flash.html' %}
+        {{ form.email(class="form-control", placeholder="请输入登录邮箱", type="email") }}
+        {% for error in form.errors.email %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+        {{ form.password(class="form-control", placeholder="请输入登录密码") }}<br/>
+        {# 我他妈直接默认保存密码得了。cookie365天 #}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+        {% if phone %}
+            <a href="{{ url_for('registry') + '?phone=' + phone }}" roll="button" class="btn btn-lg btn-default btn-block">注册</a>
+        {% else %}
+            <a href="{{ url_for('registry') }}" roll="button" class="btn btn-lg btn-default btn-block">注册</a>
+        {% endif %}
+
+        <a id="forgetpwd" href="{{ url_for('forget_pwd') }}">忘记密码？</a>
+    </form>
+</div>
+{% endblock %}

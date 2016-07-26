@@ -1,0 +1,282 @@
+html{
+    font-size:62.5%;
+    -webkit-text-size-adjust:none; /* 主要针对手机的。 */
+}
+html,body{
+    width:100%;
+    height:100%;
+    padding: 0px;
+    margin: 0px;
+/*     font-size: 62.5%;  */ /* 1rem等于12px？？？ */
+/* 	-webkit-text-size-adjust:none; */
+    -webkit-user-select:none;
+            user-select:none;
+}
+h1,h2,h3{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h1{
+    font-size: 36px;
+}
+h2{
+    font-size: 30px;
+}
+h3{
+    font-size: 24px;
+}
+input,button,select,textarea{outline:none;}
+textarea{resize:none;}
+.ml5{margin-left:5px;}
+.ml10{margin-left:10px;}
+.mr10{margin-right:10px;}
+.mr5{margin-right:5px;}
+.posr{position:relative;}
+.ma{margin:0 auto;}
+.dn{display:none;}
+.clear{clear:both;} /* 用于消除按钮组之前的空白 */
+.left{float:left;}
+/* first head style start diy*/  /* 在使用的时候自己设定每个按钮的快宽度。 */
+.width3{width:6.4rem;}  
+.width20{width:19.2rem;}
+
+/* 设定一级标题基本样式 */
+.header_one {
+    height: 4.5rem;
+    background: -webkit-linear-gradient(left, #22D0F7, #6BA6F4);
+    background: linear-gradient(left, #22D0F7, #6BA6F4);
+}
+.header_one > .header_body {
+    height: 2.9rem;
+    margin: 0 auto;
+    padding-top:0.8rem; 
+}
+.header_one > .header_body >.switch_btn {
+    display:inline-block;
+    border:none;
+    padding:0rem;
+    margin:0;
+}
+.header_one > .header_body >.switch_btn:not(:first-child){
+    margin-left:-1px;
+}
+.header_one > .header_body >.switch_btn > .btn{
+	font-size:1.25rem;
+	padding:0;
+    width:100%;
+    height:2.9rem;
+    line-height:2.9rem;
+    background-color:rgba(55, 55, 55, 0);
+    outline:none;
+    border:1px solid white;
+    color:white;
+    margin:0;
+}
+.header_one,
+.header_one > .header_body,
+.header_one > .header_body > .switch_btn{
+    text-align: center;
+    vertical-align: middle;
+}
+.tl-bl{
+    border-top-left-radius:0.5rem;
+	border-bottom-left-radius:0.5rem;
+}
+.tr-br{
+    border-top-right-radius:0.5rem;
+	border-bottom-right-radius:0.5rem;
+}
+.down { 
+    background-color:white !important;
+    color: #34C9E8 !important; 
+}
+
+/* 标题文字开始 */
+.header_one p{
+    margin:0px;
+    line-height:4.5rem;
+    font-size:1.8rem;
+    color:white;
+}
+/* 标题文字结束 */
+
+/* first  head style end */
+/* first head style start 仿bootatrap*/ /* 在使用的时候自己设定每个按钮的宽度。 */
+/* first head style end 仿bootatrap*/
+ 
+/* 加载更多的按钮样式  start*/
+.loading{
+    width:100%;
+    height:3rem;
+/*     border:1px solid red; */
+    text-align:center;    
+}
+.loading .btn_loading{
+    width:100%;
+    height:5rem;
+    line-height:5rem;
+    outline:none;
+    background-color:rgba(55, 55, 55, 0);
+    border:none; 
+    color:#A4A6AB;
+    font-size:1.75rem;
+}
+/* 加载更多的按钮样式  end*/
+
+/* 返回箭头 start*/
+.arrow-back{
+    width:4.5rem;
+	height:4.5rem;
+	position:absolute;
+	left:0rem;
+    padding-left:0px;
+}
+.arrow-back i{
+/*     width:100%;
+	height:100; */
+    font-size:2.5rem !important;
+    line-height:4.5rem;
+    color:white !important;
+    margin-left:-2rem;
+}
+/* 返回箭头 end*/
+
+/* 弹出框样式开始 */
+.alert{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    z-index:99;
+    background-color:rgba(148, 148, 148, .6);
+}
+/* 弹出框样式结束 */
+
+/* 相册按钮 开始 可以复用直接复用*/
+.button{
+    font-size:1.5rem;
+    font-weight:900;
+    width:20rem;
+    height:4rem;
+    border-radius:.4rem;
+    line-height:4rem;
+    background-color:rgba(55, 55, 55, 0);
+    outline:none;
+    border:none;
+    color:white;
+}
+.btn_blue{
+    background-color:rgb(34, 210, 246) !important;
+}.btn_pink{
+    background-color:rgb(255, 143, 117) !important;
+}
+.btn_gray{
+    background-color:rgb(217, 217, 217) !important;
+}
+/* 相册按钮 结束可以复用直接复用*/
+
+/* 以免后台移植麻烦，直接接着写 */
+.fix{
+    position:fixed;
+}
+.center{
+    text-align:center;
+}
+
+/* 二级标题 开始 */
+.header_two {
+    height: 4.5rem;
+    width:100%;
+    background: -webkit-linear-gradient(left, #22D0F7, #6BA6F4);
+    background: linear-gradient(left, #22D0F7, #6BA6F4);
+    line-height:4.5rem;
+    position:fixed;
+    top:0;
+	z-index:99;
+}
+.header_two p{
+    font-size:2rem;
+    color:#FFFFFF;
+    margin:0;
+}
+/* 二级标题 结束 */
+
+
+/*.page_img.left::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*min-width: 3rem;*/
+    /*min-height: 3rem;*/
+    /*top: -0.4rem;*/
+    /*left: 7.2rem;*/
+    /*background-image: url(/static/img/christmas-hat.svg);*/
+    /*-moz-background-size: contain;*/
+    /*-o-background-size: contain;*/
+    /*-webkit-background-size: contain;*/
+    /*background-size: contain;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-moz-transform: rotate(45deg);*/
+    /*-o-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
+/*}*/
+
+/*.private_img.left::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*min-width: 2rem;*/
+    /*min-height: 2rem;*/
+    /*top: -0.3rem;*/
+    /*left: 5.2rem;*/
+    /*background-image: url(/static/img/christmas-hat.svg);*/
+    /*-moz-background-size: contain;*/
+    /*-o-background-size: contain;*/
+    /*-webkit-background-size: contain;*/
+    /*background-size: contain;*/
+    /*-webkit-transform: rotate(50deg);*/
+    /*-moz-transform: rotate(50deg);*/
+    /*-o-transform: rotate(50deg);*/
+    /*-ms-transform: rotate(50deg);*/
+    /*transform: rotate(50deg);*/
+/*}*/
+
+/*.img::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*min-width: 2rem;*/
+    /*min-height: 2rem;*/
+    /*top: -0.8rem;*/
+    /*left: 2.8rem;*/
+    /*background-image: url(/static/img/christmas-hat.svg);*/
+    /*-moz-background-size: contain;*/
+    /*-o-background-size: contain;*/
+    /*-webkit-background-size: contain;*/
+    /*background-size: contain;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-moz-transform: rotate(45deg);*/
+    /*-o-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
+/*}*/
+
+/*.img_me::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*min-width: 2rem;*/
+    /*min-height: 2rem;*/
+    /*top: -0.2rem;*/
+    /*left: 2.8rem;*/
+    /*background-image: url(/static/img/christmas-hat.svg);*/
+    /*-moz-background-size: contain;*/
+    /*-o-background-size: contain;*/
+    /*-webkit-background-size: contain;*/
+    /*background-size: contain;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-moz-transform: rotate(45deg);*/
+    /*-o-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
+/*}*/
+
+
+

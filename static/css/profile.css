@@ -1,0 +1,591 @@
+/* 基本样式设置，由于此页面没有重构，所以单独写个css */
+/* 这些css是在原有的基础上加上的 */
+/* 2015.02.04 by zhuang */
+html{
+    font-size:62.5%;
+    -webkit-text-size-adjust:none; /* 主要针对手机的。 */
+}
+html,body{
+    width:100%;
+    height:100%;
+    padding: 0px;
+    margin: 0px;
+/*     font-size: 62.5%;  */ /* 1rem等于12px？？？ */
+/* 	-webkit-text-size-adjust:none; */
+    -webkit-user-select:none;
+            user-select:none;
+}
+.dn{
+    display:none;
+}
+/* 背景和相册开始 */
+.photo{
+    position:relative;
+}
+.btn-wrapper{
+    width:60px;
+    height:2.8rem;
+    padding:0;
+    margin-bottom:1rem;
+    margin-right:0.3rem;
+}
+#pictures_num{
+    font-size:2rem;
+    color:white;
+    line-height:2rem;
+}
+/* 背景和相册结束 */
+#click_alert{
+    z-index:9999 !important;
+}
+/* 弹出框的样式开始 */
+.alert{
+    /*消除bootstrap*/
+     padding: 0;
+     margin-bottom: 0;
+     border: none;
+     border-radius: 0;
+
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    z-index:99;
+    background-color:rgba(149, 149, 149, .38);
+}
+.click_close_one{
+    width:100%;
+    height:100%;
+    z-index:1;
+    position:absolute;
+    top:0;
+}
+.alert .alert_content{
+    position:relative;
+	left:50%;
+	top:50%;
+	margin-top:-8.7rem;
+	margin-left:-13.5rem;
+    width:27rem;
+    height:17.5rem;
+    border:1px solid #eee;
+    background-color:white;
+    border-radius:0.4rem;
+	z-index:100;
+	background-color:white;
+}
+.button{
+    font-size:1.5rem;
+    font-weight:900;
+    width:20rem;
+    height:4rem;
+    line-height:4rem;
+    border-radius:.4rem;
+    background-color:rgba(55, 55, 55, 0);
+    outline:none;
+    border:none;
+    color:white;
+}
+.btn_blue{
+    background-color:rgb(34, 210, 246) !important;
+}.btn_pink{
+    background-color:rgb(255, 143, 117) !important;
+}
+.margin{
+    margin:1.3rem 3.5rem 0rem 3.5rem;
+}
+/* 弹出框的样式结束 */
+/* 背景下部分的阴影块开始 */
+.div_bottom{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:6.4rem;
+    background:-webkit-linear-gradient(rgba(255,255,255,0),rgba(0,0,0,0.4));
+    background:linear-gradient(rgba(255,255,255, 0), rgba(0,0,0,0.4));
+}
+.div_bottom p{
+    margin-top:4rem;
+	margin-left:0.3rem;
+	color:white;
+	font-size:1.4rem;
+}
+/* 背景下部分的阴影块开始 */
+/* 图标开始 */
+.camera{
+    font-size:2.7rem !important;
+    color:rgb(176,176,176);
+    margin-bottom:-.6rem;
+    cursor:pointer;
+}
+.micro_photo{
+    color:white;
+    font-size:2.8rem !important;
+    padding-bottom:1rem;
+    z-index:1000;
+}
+/* 图标结束 */
+
+.header {
+    height: 4.5rem;
+    background: -webkit-linear-gradient(left, rgba(34, 208, 247, 0), rgba(107, 166, 244, 0));
+    display: inline-flex;
+    width: 100%;
+    color: #ffffff;
+    font-size: 1.8rem;
+    position: fixed;
+    z-index: 1;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.arrow-back{
+    display: inline-flex;
+    float: left;
+    margin: auto auto;
+    margin-left: 5px;
+}
+
+.header p{
+    text-align: center;
+    margin: auto 0;
+}
+
+.setting {
+    float: right;
+    margin: auto auto;
+    margin-right: 10px;
+}
+
+.icon{
+    font-size: 2.3rem;
+}
+
+ul {
+	text-align: center;
+    margin: auto auto;
+}
+
+ul li {
+	/*font: 13px Verdana, 'Lucida Grande';*/
+	cursor: pointer;
+	-webkit-transition: padding .05s linear;
+	-moz-transition: padding .05s linear;
+	-ms-transition: padding .05s linear;
+	-o-transition: padding .05s linear;
+	transition: padding .05s linear;
+}
+
+ul li.drop {
+	position: relative;
+}
+
+ul > li {
+	display: inline-block;
+}
+
+ul li a {
+	/*line-height: 80px;*/
+	/*padding: 0 20px;*/
+	/*height: 80px;*/
+	/*color: #777;*/
+    margin: auto 0;
+	-webkit-transition: all .1s ease-out;
+	-moz-transition: all .1s ease-out;
+	-ms-transition: all .1s ease-out;
+	-o-transition: all .1s ease-out;
+	transition: all .1s ease-out;
+}
+
+ul li a:hover {
+	color: #eee;
+}
+
+.dropOut .triangle {
+	width: 0;
+	height: 0;
+	position: absolute;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	/*border-bottom: 8px solid white;*/
+	border-bottom: 10px solid rgba(107, 166, 244, 1);
+	top: -8px;
+	left: 50%;
+	margin-left: 30px;
+}
+.dropdownContain {
+	width: 120px;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	margin-left: -105px;
+	top: -400px;
+}
+.dropOut {
+    font-size: 18px;
+	width: 120px;
+	/*background: white;*/
+    background: -webkit-linear-gradient(left, rgba(34, 208, 247, 1), rgba(107, 166, 244, 1));
+	float: left;
+	position: relative;
+	margin-top: 0px;
+	opacity: 0;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 6px rgba(0,0,0,.15);
+	-moz-box-shadow: 0 1px 6px rgba(0,0,0,.15);
+	box-shadow: 0 1px 6px rgba(0,0,0,.15);
+	-webkit-transition: all .1s ease-out;
+	-moz-transition: all .1s ease-out;
+	-ms-transition: all .1s ease-out;
+	-o-transition: all .1s ease-out;
+	transition: all .1s ease-out;
+}
+
+.dropOut ul {
+	float: left;
+	padding: 10px 0;
+}
+.dropOut ul li {
+    color: #ffffff;
+    /*color: #000000;*/
+	text-align: left;
+	float: left;
+	width: 90%;
+	padding: 5px 0 5px 5px;
+	margin: 0px 5px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-transition: background .1s ease-out;
+	-moz-transition: background .1s ease-out;
+	-ms-transition: background .1s ease-out;
+	-o-transition: background .1s ease-out;
+	transition: background .1s ease-out;
+}
+.dropOut ul li a{
+    color: #ffffff;
+    /*color: #000000;*/
+}
+
+.dropOut ul li span{
+    margin-right: 10px;
+}
+
+.dropOut ul li:hover {
+	background: rgba(50, 134, 178, 0.4);
+}
+
+ul li:hover .dropdownContain { top: 40px; }
+ul li:hover .underline { border-bottom-color: #777; }
+ul li:hover .dropOut { opacity: 1; margin-top: 8px; }
+
+
+.alert .alert_report{
+    position: relative;
+    margin: 0 auto;
+    top: 0.8rem;
+    /* left: 50%; */
+    /* top: 50%; */
+    /* margin-top: -23.7rem; */
+    /* margin-left: -13.5rem; */
+    width: 95%;
+    /* height: 17.5rem; */
+    border: 1px solid #eee;
+    background-color: white;
+    border-radius: 0.4rem;
+    z-index: 100;
+}
+
+.editor-outer{
+    padding: 15px;
+}
+
+.editor-outer textarea{
+    font-size: 14px;
+    color: #000;
+}
+
+.editor{
+    margin: 0;
+    border: 0;
+    width: 100%;
+    height: auto;
+    min-height: 80px;
+    outline: none;
+}
+
+.report-area{
+    border-top: 1px solid #c8c7cc;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.button.report{
+    float: right;
+    width: 6rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin: 1rem 1rem 0rem 1rem;
+    font-weight: inherit;
+    color: #ffffff;
+}
+
+.button.cancel{
+    color: #000000;
+}
+
+/*录音的css*/
+.alert_record{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(212,212,212,0.95);
+    /*background:rgba(0, 0, 0, 0.4);*/
+    z-index: 999;
+    /*background-image:url(/static/blur.svg);*/
+    /*background:url(/static/img/30px.png) 0 0 no-repeat;*/
+    /*background-size:cover;*/
+    /*opacity:0.97;*/
+    /*-webkit-filter: blur(5px);*/
+}
+/*#mbl{
+    width:100% !important;
+    height:100% !important;
+}*/
+#canvas{
+    position:absolute;
+    width:100% !important;
+    height:100% !important;
+}
+.record_cancel{
+    width:4rem;
+    color:white;
+    position:absolute;
+    right:1.5rem;
+    font-size: 2rem;
+    margin-top: 1.5rem;
+}
+/*实现inbox居中*/
+.alert_record_inbox{
+    width: 100%;
+    height: 18rem;
+    text-align: center;
+    position: relative;
+    top:50%;
+    margin-top:-14rem;
+    /*background-color:white;*/
+}
+#record_pic_start,#recording,#record_play,#record_pause{
+    width:10rem;
+    height:10rem;
+    display: inline-block;
+    font-size: 5rem;
+    /*border:3px solid #FF679D;*/
+    border-radius: 50rem;
+    text-align: center;
+}
+#record_pic_start{
+    border:2px solid #FF679D;
+}
+#record_play,#record_pause{
+    background-color:#FF679D;
+    text-align: center;
+}
+#record_pic_start .mike
+{
+    font-size: 7rem;
+    color:#FF679D;
+    line-height: 10rem;
+}
+#record_play .play,#record_pause .play{
+    font-size: 4.5rem;
+    display:inline-block;
+    margin-top:0.5rem;
+    color:white;
+    line-height: 10rem;
+    /*transform:rotate(90deg);*/
+}
+#record_play .play{
+    margin-left:0.8rem;
+}
+#record_start,#record_stop{
+    display: inline-block;
+    margin-top: 4rem;
+    border:1px solid #505050;
+    width:12rem;
+    height:3.8rem;
+    line-height: 3.5rem;
+    font-size: 1.5rem;
+    color:#505050;
+    font-weight: 600;
+    position: relative;
+}
+/*#record_stop{
+    margin-top: 3.3rem;
+}*/
+.re_and_upload{
+    display: inline-block;
+    margin-top: 4rem;
+    /*border:1px solid red;*/
+    width:23.7rem;
+    height:3.8rem;
+}
+#re_record,#record_upload{
+    width:9rem !important;
+    height:3.8rem !important;
+    line-height: 3.8rem;
+    font-size: 1.5rem;
+    color:#505050;
+    font-weight: 600;
+    border:1px solid #505050;
+}
+#record_upload{
+    float:right;
+}
+#re_record{
+    float:left;
+}
+.hide{
+    display:none !important;
+}
+.circle{
+    width:10rem;
+    height:10rem;
+    position:absolute;
+    border-radius: 50rem;
+    /*background:white;*/
+}
+.pie_left, .pie_right {
+    width: 10rem;
+    height: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.left,.right{
+    display:block;
+    width:9.6rem;
+    height:9.6rem;
+    /*background:#FF679D;*/
+    border-radius: 50rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border:0.2rem solid #FF679D;
+    /*transform: rotate(30deg);*/
+}
+/*.right{
+    transform: rotate(30deg);
+}*/
+.pie_right, .right{
+    clip:rect(0,auto,auto,5rem);
+}
+.pie_left, .left {
+    clip:rect(0,5rem,auto,0);
+}
+
+
+.sec {
+    width: 9.6rem;
+    height: 9.6rem;
+    border-radius: 50%;
+    left: 0.2rem;
+    top: 0.2rem;
+    background:rgba(212, 212, 212, 0);
+    /*background:url(/static/img/mbl.png) 0 0  repeat;*/
+    position: absolute;
+    text-align: center;
+    line-height: 9.4rem;
+    font-size: 3.2rem !important;
+    z-index: 1000;
+    color:white;
+}
+#record_second{
+    color:white !important;
+}
+/*自己主页的录音接口样式*/
+#I_record,#he_record{
+    width:8rem;
+    height:4rem;
+    position:absolute;
+    right:0;
+    bottom:9rem;
+    /*border:1px solid red;*/
+    border-top-left-radius: 50rem;
+    border-bottom-left-radius: 50rem;
+    background-color:#A48F88;
+
+}
+#I_record .record_play_icon,#he_record .play_icon{
+    width:3.6rem;
+    height:3.6rem;
+    border-radius:50rem;
+    background-color:#FF679D;
+    margin-top:0.2rem;
+    margin-left: 0.2rem;
+    text-align: center;
+    float:left;
+}
+.record_play_icon .play,.play_icon .play{
+    line-height: 3.8rem;
+    color:white;
+
+}
+#I_record .I_mike,#he_record .record_sum{
+    float:right;
+    width:3rem;
+    height:3rem;
+    margin-top: 0.5rem;
+    margin-right:0.4rem;
+    text-align: center;
+    background-color: rgba(80,80,80,0.8);
+    border-radius:0.5rem;
+}
+.record_sum{
+    background-color: rgba(80,80,80,0) !important;
+}
+.I_mike .mike,.record_sum .record_sum_sec,.record_sum .volume{
+    line-height: 3rem;
+    color:white;
+    font-size: 2.6rem;
+}
+.record_sum .record_sum_sec{
+    font-size:2rem !important;
+}
+/*增加苹果手机的毛玻璃效果。*/
+.body_blur header,
+.body_blur .changeimg,
+.body_blur .photo,
+.body_blur .content,
+.body_blur .sanxiang,
+.body_blur .mes_short
+{
+    -webkit-filter:blur(15px);
+}
+
+/*.photo::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*min-width: 5rem;*/
+    /*min-height: 5rem;*/
+    /*top: -2.2rem;*/
+    /*left: 5.8rem;*/
+    /*background-image: url(/static/img/christmas-hat.svg);*/
+    /*-moz-background-size: contain;*/
+    /*-o-background-size: contain;*/
+    /*-webkit-background-size: contain;*/
+    /*background-size: contain;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-moz-transform: rotate(45deg);*/
+    /*-o-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
+/*}*/

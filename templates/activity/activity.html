@@ -1,0 +1,468 @@
+{% extends 'base.html' %}
+{% import "_macros.html" as macros %}
+{% block head %}
+    {{ super() }}
+    <link href="/static/css/grade.css" rel="stylesheet">
+    <style>
+    .div-act{
+        display: inline-block;
+    }
+    li{
+        margin-bottom: 10px;
+    }
+    .panel_change{
+        padding-top: 5px;
+        padding-bottom: 40px;
+    }
+    .btn_choice{
+        margin-left: 30px;
+    }
+    .form-choice{
+        float: right;
+    }
+    /* 设置输入框们的高度 */
+    .form-control {
+        position: relative;
+        height: 40px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 7px;
+        font-size: 16px;
+    }
+
+    /* 设置性别和状态按钮组高度 */
+    .input-group .btn-group {
+        height: 40px;
+    }
+
+    /* 输入框前标签的颜色尝试           求颜色啊！！！*/
+    .input-group-addon {
+        color: #fff;
+        background-color: #e58c7c;
+        border-color: #e58c7c;
+    }
+    #gotop{
+        display:none;
+        width:55px;
+        height:55px;
+        position:fixed;
+        right:25px;
+        bottom:45px;
+        background:url(/static/img/back_top.png) no-repeat -70px 0px;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">报名信息</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                {% if choose == 1 %}
+                    <li class="active"><a href="{{ url_for('activity_manage') }}">未处理</a></li>
+                    <li><a href="{{ url_for('activity_checked') }}">已选择</a></li>
+                    <li><a href="{{ url_for('activity_denied') }}">已拒绝</a></li>
+                    <li><a href="{{ url_for('activity_deleted') }}">已删除</a></li>
+                    <li><a href="{{ url_for('activity_analysis') }}"><strong>数据参考</strong></a></li>
+                {% endif %}
+                {% if choose == 2 %}
+                    <li><a href="{{ url_for('activity_manage') }}">未处理</a></li>
+                    <li class="active"><a href="{{ url_for('activity_checked') }}">已选择</a></li>
+                    <li><a href="{{ url_for('activity_denied') }}">已拒绝</a></li>
+                    <li><a href="{{ url_for('activity_deleted') }}">已删除</a></li>
+                    <li><a href="{{ url_for('activity_analysis') }}"><strong>数据参考</strong></a></li>
+                {% endif %}
+                {% if choose == 3 %}
+                    <li><a href="{{ url_for('activity_manage') }}">未处理</a></li>
+                    <li><a href="{{ url_for('activity_checked') }}">已选择</a></li>
+                    <li><a href="{{ url_for('activity_denied') }}">已拒绝</a></li>
+                    <li class="active"><a href="{{ url_for('activity_deleted') }}">已删除</a></li>
+                    <li><a href="{{ url_for('activity_analysis') }}"><strong>数据参考</strong></a></li>
+                {% endif %}
+                {% if choose == 4 %}
+                    <li><a href="{{ url_for('activity_manage') }}">未处理</a></li>
+                    <li><a href="{{ url_for('activity_checked') }}">已选择</a></li>
+                    <li class="active"><a href="{{ url_for('activity_denied') }}">已拒绝</a></li>
+                    <li><a href="{{ url_for('activity_deleted') }}">已删除</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% if choose == 2 %}
+        <table border="1" style="font-size: 12px; text-align: center;width: 800px;height: 150px;background-color: #dff0d8">
+        <tr>
+            <td><h5>TOP8</h5></td>
+            <td>总数({{ count.all }})</td>
+            <td>华科({{ advice.huake_all }})</td>
+            <td>华师({{ advice.huashi_all }})</td>
+            <td>地大({{ advice.dida_all }})</td>
+            <td>财大({{ advice.znan_all }})</td>
+            <td>武理({{ advice.wuli_all }})</td>
+            <td>民大({{ advice.minda_all }})</td>
+            <td>武大({{ advice.wuda_all }})</td>
+            <td>农大({{ advice.nongda_all }})</td>
+            <td>其他({{ advice.other_all }})</td>
+        </tr>
+        <tr>
+            <td rowspan="2"><h5>男生</h5></td>
+            <td>建议人数</td>
+            <td>{{ advice.huakeboy_adv }}</td>
+            <td>{{ advice.huashiboy_adv }}</td>
+            <td>{{ advice.didaboy_adv }}</td>
+            <td>{{ advice.znanboy_adv }}</td>
+            <td>{{ advice.wuliboy_adv }}</td>
+            <td>{{ advice.mindaboy_adv }}</td>
+            <td>{{ advice.wudaboy_adv }}</td>
+            <td>{{ advice.nongdaboy_adv }}</td>
+            <td>{{ advice.otherboy_adv }}</td>
+        </tr>
+        <tr>
+            <td>通过人数</td>
+            <td>{{ advice.huakeboy_pass }}</td>
+            <td>{{ advice.huashiboy_pass }}</td>
+            <td>{{ advice.didaboy_pass }}</td>
+            <td>{{ advice.znanboy_pass }}</td>
+            <td>{{ advice.wuliboy_pass }}</td>
+            <td>{{ advice.mindaboy_pass }}</td>
+            <td>{{ advice.wudaboy_pass }}</td>
+            <td>{{ advice.nongdaboy_pass }}</td>
+            <td>{{ advice.otherboy_pass }}</td>
+        </tr>
+        <tr>
+            <td rowspan="2"><h5>女生</h5></td>
+            <td>建议人数</td>
+            <td>{{ advice.huakegirl_adv }}</td>
+            <td>{{ advice.huashigirl_adv }}</td>
+            <td>{{ advice.didagirl_adv }}</td>
+            <td>{{ advice.znangirl_adv }}</td>
+            <td>{{ advice.wuligirl_adv }}</td>
+            <td>{{ advice.mindagirl_adv }}</td>
+            <td>{{ advice.wudagirl_adv }}</td>
+            <td>{{ advice.nongdagirl_adv }}</td>
+            <td>{{ advice.othergirl_adv }}</td>
+        </tr>
+        <tr>
+            <td>通过人数</td>
+            <td>{{ advice.huakegirl_pass }}</td>
+            <td>{{ advice.huashigirl_pass }}</td>
+            <td>{{ advice.didagirl_pass }}</td>
+            <td>{{ advice.znangirl_pass }}</td>
+            <td>{{ advice.wuligirl_pass }}</td>
+            <td>{{ advice.mindagirl_pass }}</td>
+            <td>{{ advice.wudagirl_pass }}</td>
+            <td>{{ advice.nongdagirl_pass }}</td>
+            <td>{{ advice.othergirl_pass }}</td>
+        </tr>
+        </table>
+    {% else %}
+    <div class="bg-success" style="padding-top: 5px; padding-bottom: 5px; padding-left: 5px">
+        <h5>筛选说明（<strong><a href="{{ url_for('activity_checked')}}">点这里</a></strong>查看人员分配）</h5>
+        <div id="words" style="font-size: 12px;">
+            0.你好，筛选er！6000人的命运掌握在你手里，请认真严肃判断！Don't Panic!<br/>
+            1.<strong>筛选比例</strong>：<br/>目前是6000份报名信息，最终参加线下活动在1300人以内。<br/>
+            2.<strong>筛选步骤</strong>：<br/>
+            <strong><span class="text-danger">删除</span></strong>：信息不完整，介绍不认真，整体感觉一般的。<br/>
+            <strong><span class="text-danger">通过</span></strong>：信息完整，整体感觉很不错的。<br/>
+            <strong><span class="text-danger">拒绝</span></strong>：其他情况直接点击（减少筛选信息，方便筛选处理）。<br/>
+            3.<strong>关于评分</strong>：<br/>
+            我们会给所有用户配对，即使不能参加活动。配对是根据一个数学模型自动完成的。这个模型需要的数据包括报名表里所有信息，<br/>
+            还有一个人工打分的score。我们根据长相啊学校啊介绍啊给报名人一个1到5的分值，这样配对的时候会自动把score高而且各方<br/>
+            面相对比较搭的两人配对到一起。<br/>
+        </div>
+    </div>
+    {% endif %}
+    {% if choose == 1 %}
+    <h3>已处理：{{ count.finished }}/{{ count.all }}</h3>
+    {% endif %}
+    <table width="100%">
+        <tr>
+            <td width="23%">
+                <h4>已选：{{count.choose_all}}(男：{{count.choose_male}}女：{{count.choose_female}})</h4>
+            </td>
+            <td width="25%">
+                <h4>总数：{{ count.all }}(男：{{count.male}}女：{{count.female}})</h4>
+            </td>
+            <td width="22%">
+                <h4>今日：{{count.day_all}}(男：{{count.day_male}}女：{{count.day_female}})</h4>
+            </td>
+            <td width="30%">
+                <h4>该校:{{count.school_all}}(男：{{count.school_male}}女：{{count.school_female}}已选：{{count.school_choose}})</h4>
+            </td>
+        </tr>
+    </table>
+    <form action="" method="post" name="auth" class="form-act" role="form">
+    <div class="div-act" style="height: 50px;width: 100%;">
+        <div class="input-group" style="margin-bottom:0.5em;width: 300px;">
+            <span class="input-group-addon">学校</span>
+            {{ form.school (class="form-control")}}
+        </div>
+        <div class="input-group" style="margin-bottom:0.5em;bottom:47px;margin-left: 350px;width: 200px;">
+            <span class="input-group-addon"> 性别</span>
+
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+                <label id="one"  class="btn btn-default {% if sex=='boy' %}active{% endif %}" ><input  class="form-control " id="sex-0" name="sex" type="radio" value="boy" {% if sex=='boy' %}checked{% endif %}>男</label>
+                <label id="two"  class="btn btn-default {% if sex=='girl' %}active{% endif %}" ><input   class="form-control " id="sex-1" name="sex" type="radio" value="girl" {% if sex=='girl' %}checked{% endif %}>女</label>
+            </div>
+        </div>
+        <div class="input-group" style="margin-bottom:0.5em;width: 80px;bottom:93px;float: right">
+            <button class="btn btn-lg btn-primary" type="submit" name="filter" value="filter">
+                筛选
+            </button>
+        </div>
+    </div>
+    </form>
+    {% if info %}
+    <div class="pagination pagination-lg">
+        {% if choose == 1 %}
+            {{ macros.pagination_widget(info, 'activity_manage', sex=sex, school=school) }}
+        {% elif choose == 2 %}
+            {{ macros.pagination_widget(info, 'activity_checked', sex=sex, school=school) }}
+        {% elif choose == 3%}
+            {{ macros.pagination_widget(info, 'activity_deleted', sex=sex, school=school) }}
+        {% else%}
+            {{ macros.pagination_widget(info, 'activity_denied', sex=sex, school=school) }}
+        {% endif %}
+    </div>
+    {% endif %}
+    {% for item in info.items %}
+    <div class="panel panel-default" >
+        <div class="panel-body" style="width:100%;" >
+                <div class="left" style="width:60%;float:left;">
+                    <img class="media-object" src="{{ item.pic_url }}" style="height: 400px; max-width: 100%">
+                </div>
+                <div class="media-body" style="width:38%;float:left;margin-left:2%;">
+                    <h4 class="media-heading"><strong>{{ item.name }}</strong></h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="label label-default">性别</span>
+                            {% if item.sex == 'boy' %}男{% endif %}
+                            {% if item.sex == 'girl' %}女{% endif %}
+                        </li>
+                        <li>
+                            <span class="label label-default">学校</span>
+                            {{ item.school }}
+                        </li>
+                        <li>
+                            <span class="label label-default">年级</span>
+                            {{ item.grade }} </br>
+                        </li>
+                        <li>
+                            <span class="label label-default">生日</span>
+                            {{ item.birthday }}
+                        </li>
+                        <li>
+                            <span class="label label-primary">身高</span>
+                            {{ item.height }}
+                        </li>
+                        <li>
+                            <span class="label label-danger">电话</span>
+                            {{ item.phone }}
+                        </li>
+                        <li>
+                            <span class="label label-success">性格特点</span>
+                            {% if sex == 'boy' %}
+                                {% if 'a' in item.personality %} 幽默 {% endif %}
+                                {% if 'b' in item.personality %} 高冷 {% endif %}
+                                {% if 'c' in item.personality %} 温柔 {% endif %}
+                                {% if 'd' in item.personality %} 成熟 {% endif %}
+                                {% if 'e' in item.personality %} 孩子气 {% endif %}
+                                {% if 'f' in item.personality %} 上进 {% endif %}
+                                {% if 'g' in item.personality %} 浪漫 {% endif %}
+                                {% if 'h' in item.personality %} 学霸 {% endif %}
+                                {% if 'i' in item.personality %} 粘人 {% endif %}
+                            {% else %}
+                                {% if 'a' in item.personality %} 女汉子 {% endif %}
+                                {% if 'b' in item.personality %} 活泼 {% endif %}
+                                {% if 'c' in item.personality %} 文静 {% endif %}
+                                {% if 'd' in item.personality %} 御姐 {% endif %}
+                                {% if 'e' in item.personality %} 萝莉 {% endif %}
+                                {% if 'f' in item.personality %} 知性 {% endif %}
+                                {% if 'g' in item.personality %} 直率 {% endif %}
+                                {% if 'h' in item.personality %} 高冷 {% endif %}
+                                {% if 'i' in item.personality %} 撒娇 {% endif %}
+                            {% endif %}
+                        </li>
+                        <li>
+                            <span class="label label-warning">理想的TA</span>
+                            {% if sex == 'boy' %}
+                                {% if 'a' in item.hoped %} 女汉子 {% endif %}
+                                {% if 'b' in item.hoped %} 活泼 {% endif %}
+                                {% if 'c' in item.hoped %} 文静 {% endif %}
+                                {% if 'd' in item.hoped %} 御姐 {% endif %}
+                                {% if 'e' in item.hoped %} 萝莉 {% endif %}
+                                {% if 'f' in item.hoped %} 知性 {% endif %}
+                                {% if 'g' in item.hoped %} 直率 {% endif %}
+                                {% if 'h' in item.hoped %} 高冷 {% endif %}
+                                {% if 'i' in item.hoped %} 撒娇 {% endif %}
+                            {% else %}
+                                {% if 'a' in item.hoped %} 幽默 {% endif %}
+                                {% if 'b' in item.hoped %} 高冷 {% endif %}
+                                {% if 'c' in item.hoped %} 温柔 {% endif %}
+                                {% if 'd' in item.hoped %} 成熟 {% endif %}
+                                {% if 'e' in item.hoped %} 孩子气 {% endif %}
+                                {% if 'f' in item.hoped %} 上进 {% endif %}
+                                {% if 'g' in item.hoped %} 浪漫 {% endif %}
+                                {% if 'h' in item.hoped %} 学霸 {% endif %}
+                                {% if 'i' in item.hoped %} 粘人 {% endif %}
+                            {% endif %}
+                        </li>
+                        <li>
+                            <span class="label label-info">个人简介</span>
+                            {{ item.info }}
+                        </li>
+                        <li>
+                            <span class="label label-primary" style="float: left; margin-right: 10px">总体评分</span>
+
+                            <div id="xzw_starSys" style="padding:0;border:none;margin:0 auto;bottom: 3px">
+                                <div id="xzw_starBox">
+                                    <ul class="star" id="star">
+                                        <li><a href="javascript:void(0)" name="{{ item.id }}" id="one-star" title="1" class="one-star">1</a></li>
+                                        <li><a href="javascript:void(0)" name="{{ item.id }}" id="two-stars" title="2" class="two-stars">2</a></li>
+                                        <li><a href="javascript:void(0)" name="{{ item.id }}" id="three-stars" title="3" class="three-stars">3</a></li>
+                                        <li><a href="javascript:void(0)" name="{{ item.id }}" id="four-stars" title="4" class="four-stars">4</a></li>
+                                        <li><a href="javascript:void(0)" name="{{ item.id }}" id="five-stars" title="5" class="five-stars">5</a></li>
+                                    </ul>
+                                    {% if item.score == 0 %}
+                                        <div class="current-rating" id="showb" style="width: 0px"></div>{% endif %}
+                                    {% if item.score == 1 %}
+                                        <div class="current-rating" id="showb" style="width: 24px"></div>{% endif %}
+                                    {% if item.score == 2 %}
+                                        <div class="current-rating" id="showb" style="width: 48px"></div>{% endif %}
+                                    {% if item.score == 3 %}
+                                        <div class="current-rating" id="showb" style="width: 72px"></div>{% endif %}
+                                    {% if item.score == 4 %}
+                                        <div class="current-rating" id="showb" style="width: 96px"></div>{% endif %}
+                                    {% if item.score == 5 %}
+                                        <div class="current-rating" id="showb" style="width: 120px"></div>{% endif %}
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+               </div>
+        </div>
+        <div class="panel_change panel-footer">
+            <form action="" method="post" name="choice" class="form-choice" role="form">
+                {% if choose == 1 %}
+                    <button class="btn_choice btn btn btn-primary" type="submit" name="choice" value="{{ item.id }}">
+                        通过
+                    </button>
+                    <button class="btn_choice btn btn-primary" type="submit" name="deny" value="{{ item.id }}">
+                        拒绝
+                    </button>
+                    <button class="btn_choice btn btn-danger" type="submit" name="delete" value="{{ item.id }}">
+                        删除
+                    </button>
+                {% elif choose == 2 %}
+                    <button class="btn_choice btn btn-primary" type="submit" name="deny" value="{{ item.id }}">
+                        拒绝
+                    </button>
+                    <button class="btn_choice btn btn-danger" type="submit" name="delete" value="{{ item.id }}">
+                        删除
+                    </button>
+                {% elif choose == 3 %}
+                    <button class="btn_choice btn btn btn-primary" type="submit" name="choice" value="{{ item.id }}">
+                        通过
+                    </button>
+                    <button class="btn_choice btn btn-primary" type="submit" name="deny" value="{{ item.id }}">
+                        拒绝
+                    </button>
+                {% else %}
+                    <button class="btn_choice btn btn btn-primary" type="submit" name="choice" value="{{ item.id }}">
+                        通过
+                    </button>
+                    <button class="btn_choice btn btn-danger" type="submit" name="delete" value="{{ item.id }}">
+                        删除
+                    </button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% if info %}
+        <div class="pagination pagination-lg" style="float: right">
+            {% if choose == 1 %}
+                {{ macros.pagination_widget(info, 'activity_manage', sex=sex, school=school) }}
+            {% elif choose == 2 %}
+                {{ macros.pagination_widget(info, 'activity_checked', sex=sex, school=school) }}
+            {% elif choose == 3 %}
+                {{ macros.pagination_widget(info, 'activity_deleted', sex=sex, school=school) }}
+            {% else%}
+                {{ macros.pagination_widget(info, 'activity_denied', sex=sex, school=school) }}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+<div id="gotop"></div>
+    <script type="text/javascript">
+        function goTop() {
+            $(window).scroll(function (e) {
+                //若滚动条离顶部大于100元素
+                if ($(window).scrollTop() > 100)
+                    $("#gotop").fadeIn(1000);//以1秒的间隔渐显id=gotop的元素
+                else
+                    $("#gotop").fadeOut(1000);//以1秒的间隔渐隐id=gotop的元素
+            });
+        }
+        ;
+        $(function () {
+            //点击回到顶部的元素
+            $("#gotop").click(function (e) {
+                //以1秒的间隔返回顶部
+                $('body,html').animate({scrollTop: 0}, 1000);
+            });
+            $("#gotop").mouseover(function (e) {
+                $(this).css("background", "url(/static/img/back_top.png) no-repeat 0px 0px");
+            });
+            $("#gotop").mouseout(function (e) {
+                $(this).css("background", "url(/static/img/back_top.png) no-repeat -70px 0px");
+            });
+            goTop();//实现回到顶部元素的渐显与渐隐
+        });
+        var stepW = 24;
+        $("[id = one-star]").click(function () {
+            $(this).parents('ul').next('div').css({"width": stepW * 1});
+            var id = $(this).attr("name");
+            $.ajax({
+                       type: 'POST',
+                       data: {star: 1, id: id}
+                   })
+        });
+        $("[id = two-stars]").click(function () {
+            $(this).parents('ul').next('div').css({"width": stepW * 2});
+            var id = $(this).attr("name");
+            $.ajax({
+                       type: 'POST',
+                       data: {star: 2, id: id}
+                   })
+        });
+        $("[id = three-stars]").click(function () {
+            $(this).parents('ul').next('div').css({"width": stepW * 3});
+            var id = $(this).attr("name");
+            $.ajax({
+                       type: 'POST',
+                       data: {star: 3, id: id}
+                   })
+        });
+        $("[id = four-stars]").click(function () {
+            $(this).parents('ul').next('div').css({"width": stepW * 4});
+            var id = $(this).attr("name");
+            $.ajax({
+                       type: 'POST',
+                       data: {star: 4, id: id}
+                   })
+        });
+        $("[id = five-stars]").click(function () {
+            $(this).parents('ul').next('div').css({"width": stepW * 5});
+            var id = $(this).attr("name");
+            $.ajax({
+                       type: 'POST',
+                       data: {star: 5, id: id}
+                   })
+        });
+    </script>
+{% endblock %}
