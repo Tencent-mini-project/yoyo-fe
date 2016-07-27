@@ -97,6 +97,14 @@ border-color: #e58c7c;
 
     <fieldset>
     <legend style="margin-bottom:0.5em;">基本资料</legend>
+    {% for error in form.errors.sex %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+ <div class="input-group" style="margin-bottom:0.5em;">
+    <span class="input-group-addon"> 性别</span>
+    <div class="btn-group btn-group-justified" data-toggle="buttons">
+        <label class="btn btn-default btn-left"><input onclick="changeColor('b')"  type="radio" name="sex" id="sex-one" value="男">男</label>
+        <label class="btn btn-default"><input onclick="changeColor('r')" type="radio" name="sex" id="sex-two" value="女">女</label>
+    </div>
+</div>    
     {% for error in form.errors.nickname %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
     <div class="input-group" style="margin-bottom:0.5em;">
          <span class="input-group-addon">昵称</span>
@@ -107,14 +115,6 @@ border-color: #e58c7c;
          <span class="input-group-addon">学校</span>
          {{ form.school (class="form-control")}}
  </div>
-    {% for error in form.errors.sex %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
- <div class="input-group" style="margin-bottom:0.5em;">
-    <span class="input-group-addon"> 性别</span>
-    <div class="btn-group btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-default btn-left"><input onclick="changeColor('b')"  type="radio" name="sex" id="sex-one" value="男">男</label>
-        <label class="btn btn-default"><input onclick="changeColor('r')" type="radio" name="sex" id="sex-two" value="女">女</label>
-    </div>
-</div>
 
     {% for error in form.errors.status %}<span style="color:red;">[{{ error }}]</span><br>{% endfor %}
 <div class="input-group" style="margin-bottom:0.5em;">

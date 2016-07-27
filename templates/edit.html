@@ -66,11 +66,23 @@ body{
 {% for error in form.errors.nickname %}
 <span style="color:red;">[{{ error }}]</span><br/>
 {% endfor %}
- <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+ <!--<div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
          <span class="input-group-addon">学校</span>
          {{ form.school (class="form-control")}}
+ </div>-->
+  <!--修改-->
+  <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">公司</span>
+         {{ form.company (class="form-control", placeholder="你所在的公司")}}
  </div>
 
+   <div class="input-group" style="margin:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
+         <span class="input-group-addon">职位</span>
+         {{ form.job (class="form-control", placeholder="你的职位")}}
+ </div>
+ 
+ <!--修改end-->
+<!--
  <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
 
 		<span class="input-group-addon"> 状态</span>
@@ -100,7 +112,7 @@ body{
          <span class="input-group-addon">年级</span>
          {{ form.grade (class="form-control", maxlength=18, placeholder="年级或单位")}}
  </div>
-{% for error in form.errors.grade %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}
+{% for error in form.errors.grade %}<span style="color:red;">[{{ error }}]</span><br/>{% endfor %}-->
 <div class="input-group" style="margin-left:0.2em;margin-right:0.2em;margin-bottom:0.5em;">
          <span class="input-group-addon">家乡</span>
 	    <div style="margin:0;padding:0;display:block">
